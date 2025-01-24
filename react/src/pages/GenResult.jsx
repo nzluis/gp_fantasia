@@ -26,7 +26,7 @@ export default function GenResult() {
         const fetchRiders = async () => {
             try {
                 const response = await fetch(
-                    'https://fantasygpback.onrender.com//riders'
+                    'https://fantasygpback.onrender.com/riders'
                 );
                 if (!response.ok)
                     return alert('Algo fue mal consiguiendo los pilotos');
@@ -53,7 +53,7 @@ export default function GenResult() {
         const fetchRiders = async () => {
             try {
                 const response = await fetch(
-                    'https://fantasygpback.onrender.com//circuits'
+                    'https://fantasygpback.onrender.com/circuits'
                 );
                 if (!response.ok)
                     return alert('Algo fue mal consiguiendo los circuitos');
@@ -85,7 +85,7 @@ export default function GenResult() {
 
         try {
             const response = await fetch(
-                'https://fantasygpback.onrender.com//results/create',
+                'https://fantasygpback.onrender.com/results/create',
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },

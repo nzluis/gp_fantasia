@@ -45,7 +45,7 @@ export default function Team() {
 
         try {
             const response = await fetch(
-                'https://fantasygpback.onrender.com//bets/create',
+                'https://fantasygpback.onrender.com/bets/create',
                 {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -72,7 +72,7 @@ export default function Team() {
         const fetchRiders = async () => {
             try {
                 const response = await fetch(
-                    'https://fantasygpback.onrender.com//riders'
+                    'https://fantasygpback.onrender.com/riders'
                 );
                 if (!response.ok)
                     return alert('Algo fue mal consiguiendo los pilotos');
@@ -99,7 +99,7 @@ export default function Team() {
         const fetchRiders = async () => {
             try {
                 const response = await fetch(
-                    'https://fantasygpback.onrender.com//nextCircuit'
+                    'https://fantasygpback.onrender.com/nextCircuit'
                 );
                 if (!response.ok)
                     return alert('Algo fue mal consiguiendo los circuitos');

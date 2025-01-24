@@ -10,11 +10,11 @@ export default function Standings() {
     useEffect(() => {
         async function fetchData() {
             const resultsResponse = await fetch(
-                'https://fantasygpback.onrender.com//results'
+                'https://fantasygpback.onrender.com/results'
             );
             const resultsData = await resultsResponse.json();
             const betsResponse = await fetch(
-                'https://fantasygpback.onrender.com//bets'
+                'https://fantasygpback.onrender.com/bets'
             );
             const betsData = await betsResponse.json();
 
