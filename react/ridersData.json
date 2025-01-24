@@ -1,0 +1,338 @@
+[
+    {
+        "fullName": "Jorge Martín Almoguera",
+        "nickname": "Martinator",
+        "dorsal": 89,
+        "team": "Aprilia Racing",
+        "category": "motoGP",
+        "riderID": "jorge_martin"
+    },
+    {
+        "fullName": "Johann Zarco",
+        "nickname": "Zarco",
+        "dorsal": 5,
+        "team": "Castrol Honda LCR",
+        "category": "motoGP",
+        "riderID": "johann_zarco"
+    },
+    {
+        "fullName": "Luca Marini",
+        "nickname": "Maro",
+        "dorsal": 10,
+        "team": "Honda HRC",
+        "category": "motoGP",
+        "riderID": "luca_marini"
+    },
+    {
+        "fullName": "Maverick Viñales Ruiz",
+        "nickname": "Top Gun",
+        "dorsal": 12,
+        "team": "Red Bull KTM Tech3",
+        "category": "motoGP",
+        "riderID": "maverick_vinales"
+    },
+    {
+        "fullName": "Fabio Quartararo",
+        "nickname": "El Diablo",
+        "dorsal": 20,
+        "team": "Monster Energy Yamaha MotoGP Team",
+        "category": "motoGP",
+        "riderID": "fabio_quartararo"
+    },
+    {
+        "fullName": "Franco Morbidelli",
+        "nickname": "Morbido",
+        "dorsal": 21,
+        "team": "Pertamina Enduro VR46 Racing Team",
+        "category": "motoGP",
+        "riderID": "franco_morbidelli"
+    },
+    {
+        "fullName": "Enea Bastianini",
+        "nickname": "La Bestia",
+        "dorsal": 23,
+        "team": "Red Bull KTM Tech3",
+        "category": "motoGP",
+        "riderID": "enea_bastianini"
+    },
+    {
+        "fullName": "Raúl Fernández",
+        "nickname": "El Niño",
+        "dorsal": 25,
+        "team": "Trackhouse MotoGP Team",
+        "category": "motoGP",
+        "riderID": "raul_fernandez"
+    },
+    {
+        "fullName": "Brad Binder",
+        "nickname": "Bradical",
+        "dorsal": 33,
+        "team": "Red Bull KTM Factory Racing",
+        "category": "motoGP",
+        "riderID": "brad_binder"
+    },
+    {
+        "fullName": "Somkiat Chantra",
+        "nickname": "Kong",
+        "dorsal": 35,
+        "team": "Idemitsu Honda LCR",
+        "category": "motoGP",
+        "riderID": "somkiat_chantra"
+    },
+    {
+        "fullName": "Joan Mir Mayrata",
+        "nickname": "Joan Mir",
+        "dorsal": 36,
+        "team": "Honda HRC",
+        "category": "motoGP",
+        "riderID": "joan_mir"
+    },
+    {
+        "fullName": "Pedro Acosta Sánchez",
+        "nickname": "Tiburón de Mazarrón",
+        "dorsal": 37,
+        "team": "Red Bull KTM Factory Racing",
+        "category": "motoGP",
+        "riderID": "pedro_acosta"
+    },
+    {
+        "fullName": "Álex Rins Navarro",
+        "nickname": "Rins",
+        "dorsal": 42,
+        "team": "Monster Energy Yamaha MotoGP Team",
+        "category": "motoGP",
+        "riderID": "alex_rins"
+    },
+    {
+        "fullName": "Jack Miller",
+        "nickname": "Jackass",
+        "dorsal": 43,
+        "team": "Prima Pramac Yamaha",
+        "category": "motoGP",
+        "riderID": "jack_miller"
+    },
+    {
+        "fullName": "Fabio Di Giannantonio",
+        "nickname": "Diggia",
+        "dorsal": 49,
+        "team": "Pertamina Enduro VR46 Racing Team",
+        "category": "motoGP",
+        "riderID": "fabio_di"
+    },
+    {
+        "fullName": "Fermín Aldeguer",
+        "nickname": "Aldeguer",
+        "dorsal": 54,
+        "team": "Gresini Racing MotoGP",
+        "category": "motoGP",
+        "riderID": "fermin_aldeguer"
+    },
+    {
+        "fullName": "Francesco Bagnaia",
+        "nickname": "Pecco",
+        "dorsal": 63,
+        "team": "Ducati Lenovo Team",
+        "category": "motoGP",
+        "riderID": "francesco_bagnaia"
+    },
+    {
+        "fullName": "Marco Bezzecchi",
+        "nickname": "Bez",
+        "dorsal": 72,
+        "team": "Aprilia Racing",
+        "category": "motoGP",
+        "riderID": "marco_bezzecchi"
+    },
+    {
+        "fullName": "Álex Márquez",
+        "nickname": "Álex",
+        "dorsal": 73,
+        "team": "Gresini Racing MotoGP",
+        "category": "motoGP",
+        "riderID": "alex_marquez"
+    },
+    {
+        "fullName": "Ai Ogura",
+        "nickname": "Ai",
+        "dorsal": 79,
+        "team": "Trackhouse MotoGP Team",
+        "category": "motoGP",
+        "riderID": "ai_ogura"
+    },
+    {
+        "fullName": "Miguel Oliveira",
+        "nickname": "Falcão",
+        "dorsal": 88,
+        "team": "Prima Pramac Yamaha",
+        "category": "motoGP",
+        "riderID": "miguel_oliveira"
+    },
+    {
+        "fullName": "Marc Márquez Alentà",
+        "nickname": "El Tro de Cervera",
+        "dorsal": 93,
+        "team": "Ducati Lenovo Team",
+        "category": "motoGP",
+        "riderID": "marc_marquez"
+    },
+    {
+        "fullName": "Tony Arbolino",
+        "nickname": "Arbolino",
+        "dorsal": 14,
+        "team": "Elf Marc VDS Racing Team",
+        "category": "moto2",
+        "riderID": "tony_arbolino"
+    },
+    {
+        "fullName": "Pedro Acosta Sánchez",
+        "nickname": "Tiburón",
+        "dorsal": 37,
+        "team": "Red Bull KTM Ajo",
+        "category": "moto2",
+        "riderID": "pedro_acosta"
+    },
+    {
+        "fullName": "Arón Canet Barbero",
+        "nickname": "Canet",
+        "dorsal": 40,
+        "team": "Pons Wegow Los40",
+        "category": "moto2",
+        "riderID": "aron_canet"
+    },
+    {
+        "fullName": "Jake Dixon",
+        "nickname": "Dixon",
+        "dorsal": 96,
+        "team": "GASGAS Aspar Team",
+        "category": "moto2",
+        "riderID": "jake_dixon"
+    },
+    {
+        "fullName": "Albert Arenas",
+        "nickname": "Arenas",
+        "dorsal": 75,
+        "team": "Red Bull KTM Ajo",
+        "category": "moto2",
+        "riderID": "albert_arenas"
+    },
+    {
+        "fullName": "Fermín Aldeguer",
+        "nickname": "Aldeguer",
+        "dorsal": 54,
+        "team": "SpeedUp Racing Team",
+        "category": "moto2",
+        "riderID": "fermin_aldeguer"
+    },
+    {
+        "fullName": "Celestino Vietti Ramus",
+        "nickname": "Vietti",
+        "dorsal": 13,
+        "team": "Fantic Racing",
+        "category": "moto2",
+        "riderID": "celestino_vietti"
+    },
+    {
+        "fullName": "Sam Lowes",
+        "nickname": "Lowes",
+        "dorsal": 22,
+        "team": "Elf Marc VDS Racing Team",
+        "category": "moto2",
+        "riderID": "sam_lowes"
+    },
+    {
+        "fullName": "Manuel González Simón",
+        "nickname": "ManuGass",
+        "dorsal": 18,
+        "team": "Yamaha VR46 Master Camp",
+        "category": "moto2",
+        "riderID": "manuel_gonzalez"
+    },
+    {
+        "fullName": "Barry Baltus",
+        "nickname": "Baltus",
+        "dorsal": 70,
+        "team": "RW Racing GP",
+        "category": "moto2",
+        "riderID": "barry_baltus"
+    },
+    {
+        "fullName": "Izan Guevara Iglesias",
+        "nickname": "Izan",
+        "dorsal": 28,
+        "team": "Red Bull KTM Ajo",
+        "category": "moto3",
+        "riderID": "izan_guevara"
+    },
+    {
+        "fullName": "Jaume Masià Estrela",
+        "nickname": "Masià",
+        "dorsal": 5,
+        "team": "Leopard Racing",
+        "category": "moto3",
+        "riderID": "jaume_masia"
+    },
+    {
+        "fullName": "Dennis Foggia",
+        "nickname": "Rocket",
+        "dorsal": 7,
+        "team": "Leopard Racing",
+        "category": "moto3",
+        "riderID": "dennis_foggia"
+    },
+    {
+        "fullName": "Daniel Holgado Miralles",
+        "nickname": "Holgado",
+        "dorsal": 96,
+        "team": "Red Bull KTM Ajo",
+        "category": "moto3",
+        "riderID": "daniel_holgado"
+    },
+    {
+        "fullName": "Ayumu Sasaki",
+        "nickname": "Crazy Boy",
+        "dorsal": 71,
+        "team": "Liqui Moly Husqvarna Intact GP",
+        "category": "moto3",
+        "riderID": "ayumu_sasaki"
+    },
+    {
+        "fullName": "Xavier Artigas",
+        "nickname": "Artigas",
+        "dorsal": 43,
+        "team": "CFMoto Racing PrüstelGP",
+        "category": "moto3",
+        "riderID": "xavier_artigas"
+    },
+    {
+        "fullName": "Tatsuki Suzuki",
+        "nickname": "Tatsu",
+        "dorsal": 24,
+        "team": "SIC58 Squadra Corse",
+        "category": "moto3",
+        "riderID": "tatsuki_suzuki"
+    },
+    {
+        "fullName": "Ryusei Yamanaka",
+        "nickname": "Yamanaka",
+        "dorsal": 6,
+        "team": "MT Helmets - MSI",
+        "category": "moto3",
+        "riderID": "ryusei_yamanaka"
+    },
+    {
+        "fullName": "David Muñoz Rodríguez",
+        "nickname": "Muñoz",
+        "dorsal": 64,
+        "team": "BOE Motorsports",
+        "category": "moto3",
+        "riderID": "david_munoz"
+    },
+    {
+        "fullName": "Iván Ortolá Escrivà",
+        "nickname": "Ortolá",
+        "dorsal": 48,
+        "team": "Angeluss MTA Team",
+        "category": "moto3",
+        "riderID": "ivan_ortola"
+    }
+]
