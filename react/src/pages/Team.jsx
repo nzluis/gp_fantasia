@@ -44,11 +44,14 @@ export default function Team() {
         console.log('MotoGP:', podiums.motoGP);
 
         try {
-            const response = await fetch('http://localhost:5000/bets/create', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(podiums),
-            });
+            const response = await fetch(
+                'https://fantasygpback.onrender.com//bets/create',
+                {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(podiums),
+                }
+            );
             if (!response.ok) {
                 const error = await response.json();
                 if (error.error) {
@@ -68,7 +71,9 @@ export default function Team() {
     useEffect(() => {
         const fetchRiders = async () => {
             try {
-                const response = await fetch('http://localhost:5000/riders');
+                const response = await fetch(
+                    'https://fantasygpback.onrender.com//riders'
+                );
                 if (!response.ok)
                     return alert('Algo fue mal consiguiendo los pilotos');
                 const riders = await response.json();
@@ -94,7 +99,7 @@ export default function Team() {
         const fetchRiders = async () => {
             try {
                 const response = await fetch(
-                    'http://localhost:5000/nextCircuit'
+                    'https://fantasygpback.onrender.com//nextCircuit'
                 );
                 if (!response.ok)
                     return alert('Algo fue mal consiguiendo los circuitos');

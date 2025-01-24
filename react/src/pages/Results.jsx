@@ -12,10 +12,12 @@ export default function Results() {
     useEffect(() => {
         async function fetchData() {
             const resultsResponse = await fetch(
-                'http://localhost:5000/results'
+                'https://fantasygpback.onrender.com//results'
             );
             const resultsData = await resultsResponse.json();
-            const betsResponse = await fetch('http://localhost:5000/bets');
+            const betsResponse = await fetch(
+                'https://fantasygpback.onrender.com//bets'
+            );
             const betsData = await betsResponse.json();
 
             setResults(resultsData);
