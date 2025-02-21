@@ -26,3 +26,38 @@
     font-size: 0.8rem;
     margin: unset;
 }
+
+.standingsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.standingsTable th,
+.standingsTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.standingsTable th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+td {
+    white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+    .standingsTable {
+        font-size: 14px;
+    }
+    td {
+        white-space: normal;
+    }
+}

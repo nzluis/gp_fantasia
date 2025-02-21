@@ -50,7 +50,7 @@ export default function GenResult() {
     }, []);
 
     useEffect(() => {
-        const fetchRiders = async () => {
+        const fetchCircuits = async () => {
             try {
                 const response = await fetch(
                     'https://fantasygpback.onrender.com/circuits'
@@ -62,8 +62,8 @@ export default function GenResult() {
                     const raceDate = new Date(circuit.date);
                     const today = new Date();
                     return (
-                        raceDate.getTime() - today.getTime() < 12096e5 &&
-                        today.getTime() - raceDate.getTime() < 864e5
+                        today.getTime() >= raceDate.getTime() &&
+                        today.getTime() <= raceDate.getTime() + 3 * 864e5
                     );
                 });
                 setCircuits(soonCircuit);
@@ -72,7 +72,7 @@ export default function GenResult() {
                 alert('Error al obtener los circuitos');
             }
         };
-        if (motoGPRiders.length === 0 || !motoGPRiders) fetchRiders();
+        if (motoGPRiders.length === 0 || !motoGPRiders) fetchCircuits();
     }, []);
 
     const handleSubmit = async (e) => {

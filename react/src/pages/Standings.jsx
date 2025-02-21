@@ -30,28 +30,33 @@ export default function Standings() {
 
         results.forEach((result) => {
             bets.forEach((bet) => {
+                if (bet.circuit !== result.circuit) return;
                 const user = bet.user;
 
-                // Initialize user in standings
+                // Inicializar el usuario en standings si no existe
                 if (!standings[user]) {
                     standings[user] = { total: 0, progress: [] };
                 }
 
+                // Calcular puntos solo para este circuito
                 let totalPointsForCircuit = 0;
-
-                // Calculate points for each competition in the circuit
                 ['moto3', 'moto2', 'motoGP'].forEach((competition) => {
                     const podium = result[competition];
                     const userBet = bet[competition];
                     totalPointsForCircuit += calculatePoints(podium, userBet);
                 });
 
-                // Update user standings
-                standings[user].total += totalPointsForCircuit;
+                // Agregar puntos del circuito al progreso (no acumulados)
                 standings[user].progress.push({
                     circuit: result.circuit,
-                    points: standings[user].total,
+                    points: totalPointsForCircuit,
                 });
+
+                // Actualizar el total acumulado
+                standings[user].total = standings[user].progress.reduce(
+                    (sum, p) => sum + p.points,
+                    0
+                );
             });
         });
 
@@ -119,10 +124,14 @@ export default function Standings() {
                                 <tbody>
                                     {sortedUsers.map(
                                         ([user, data], userIndex) => {
-                                            const progress = data.progress.find(
-                                                (p) =>
-                                                    p.circuit === result.circuit
-                                            );
+                                            let initIndex = 0;
+                                            let progress = 0;
+                                            while (initIndex <= index) {
+                                                progress +=
+                                                    data.progress[initIndex]
+                                                        .points;
+                                                initIndex += 1;
+                                            }
                                             return (
                                                 <tr
                                                     key={`${user}-${result.circuit}`}
@@ -134,11 +143,7 @@ export default function Standings() {
                                                             .toUpperCase() +
                                                             user.slice(1)}
                                                     </td>
-                                                    <td>
-                                                        {progress
-                                                            ? progress.points
-                                                            : 0}
-                                                    </td>
+                                                    <td>{progress}</td>
                                                 </tr>
                                             );
                                         }

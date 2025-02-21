@@ -223,8 +223,8 @@ export default function Results() {
                                                                                         ]
                                                                                             ? [
                                                                                                   6,
+                                                                                                  5,
                                                                                                   4,
-                                                                                                  2,
                                                                                               ][
                                                                                                   index
                                                                                               ]
