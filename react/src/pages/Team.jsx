@@ -125,7 +125,9 @@ export default function Team() {
     useEffect(() => {
         const fetchBets = async () => {
             try {
-                const betsResponse = await fetch('http://localhost:5000/bets');
+                const betsResponse = await fetch(
+                    'https://fantasygpback.onrender.com/bets'
+                );
                 if (!betsResponse.ok)
                     return alert('Algo fue mal consiguiendo las apuestas');
                 const betsData = await betsResponse.json();
