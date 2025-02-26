@@ -20,7 +20,9 @@ export default function PodiumForm({ riders, category, onPodiumChange }) {
         const usedRiders = Object.values(podium).filter(
             (p) => p !== '' && p !== podium[position]
         );
-        return riders.filter((rider) => !usedRiders.includes(rider.riderID));
+        return riders
+            .filter((rider) => !usedRiders.includes(rider.riderID))
+            .sort((a, b) => a.fullName.localeCompare(b.fullName));
     };
 
     return (
