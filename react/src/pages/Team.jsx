@@ -134,7 +134,7 @@ export default function Team() {
         const fetchLastCircuit = async () => {
             try {
                 const response = await fetch(
-                    'http://localhost:5000/lastCircuit'
+                    'https://fantasygpback.onrender.com/lastCircuit'
                 );
                 if (!response.ok)
                     return console.error(
