@@ -88,7 +88,7 @@ app.get('/nextCircuit', async (req, res) => {
             due_date: { $gte: now, $lte: fiveDaysLater },
         }).sort({ due_date: 1 });
         if (!circuit) {
-            res.json({ message: 'No hay circuitos próximos' });
+            res.json({ message: 'Siguiente circuito no disponible' });
             return;
         }
         res.json(circuit);
