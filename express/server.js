@@ -80,10 +80,35 @@ app.get('/circuits', async (req, res) => {
 
 app.get('/nextCircuit', async (req, res) => {
     try {
-        const circuits = await Circuit.findOne({
-            due_date: { $gte: new Date() },
-        }).sort({ date: 1 });
-        res.json(circuits);
+        const now = new Date();
+        const fiveDaysLater = new Date();
+        fiveDaysLater.setDate(now.getDate() + 5);
+
+        const circuit = await Circuit.findOne({
+            due_date: { $gte: now, $lte: fiveDaysLater },
+        }).sort({ due_date: 1 });
+        if (!circuit) {
+            res.json({ message: 'No hay circuitos próximos' });
+            return;
+        }
+        res.json(circuit);
+    } catch (error) {
+        res.status(500).json({ error: 'Error al obtener los circuitos' });
+    }
+});
+
+app.get('/lastCircuit', async (req, res) => {
+    try {
+        const now = new Date();
+
+        const circuit = await Circuit.findOne({
+            due_date: { $lt: now },
+        }).sort({ due_date: -1 });
+        if (!circuit) {
+            res.json({ message: 'No hay circuitos pasados' });
+            return;
+        }
+        res.json(circuit);
     } catch (error) {
         res.status(500).json({ error: 'Error al obtener los circuitos' });
     }
