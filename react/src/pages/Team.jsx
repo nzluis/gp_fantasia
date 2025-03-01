@@ -242,7 +242,7 @@ export default function Team() {
             {lastCircuitBets.length > 0 &&
                 new Date() > new Date(lastCircuit.due_date) && (
                     <div>
-                        <h3>Apuestas para {nextCircuit.name}</h3>
+                        <h3>Apuestas para {lastCircuit.name}</h3>
                         <table className={styles.standingsTable}>
                             <thead>
                                 <tr>
