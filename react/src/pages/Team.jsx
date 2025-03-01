@@ -20,7 +20,7 @@ export default function Team() {
         motoGP: { first: '', second: '', third: '' },
     });
 
-    const nextCircuitBets = useMemo(() => {
+    const lastCircuitBets = useMemo(() => {
         return bets.filter((bet) => bet.circuit === lastCircuit.circuitID);
     }, [bets, lastCircuit]);
 
@@ -170,7 +170,7 @@ export default function Team() {
         <div className={styles.container}>
             {/* <h1>Tu apuesta</h1> */}
             <form onSubmit={handleSubmit}>
-                <h3>{nextCircuit.name}</h3>
+                <h3>{nextCircuit.name ?? nextCircuit.message}</h3>
                 <div>
                     <label>User: </label>
                     <select
@@ -181,7 +181,8 @@ export default function Team() {
                         required
                     >
                         <option value=''>Seleccionar</option>
-                        {Object.keys(users).map((userKey) => {
+                        {nextCircuit.name &&
+                            Object.keys(users).map((userKey) => {
                             const userBetExists = nextCircuitBets.find(
                                 (bet) => bet.user === userKey
                             );
@@ -229,7 +230,7 @@ export default function Team() {
                     </div> */}
                 </div>
             </form>
-            {nextCircuitBets.length > 0 &&
+            {lastCircuitBets.length > 0 &&
                 new Date() > new Date(lastCircuit.due_date) && (
                     <div>
                         <h3>Apuestas para {nextCircuit.name}</h3>
@@ -243,7 +244,7 @@ export default function Team() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {nextCircuitBets.map((bet) => (
+                                {lastCircuitBets.map((bet) => (
                                     <tr key={bet._id}>
                                         <td>{users[bet.user]}</td>
                                         <td>
