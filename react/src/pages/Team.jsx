@@ -9,6 +9,7 @@ export default function Team() {
     const [moto2Riders, setMoto2Riders] = useState([]);
     const [motoGPRiders, setMotoGPRiders] = useState([]);
     const [nextCircuit, setNextCircuit] = useState({});
+    const [lastCircuit, setLastCircuit] = useState({});
     const [bets, setBets] = useState([]);
     const [podiums, setPodiums] = useState({
         user: '',
@@ -20,8 +21,8 @@ export default function Team() {
     });
 
     const nextCircuitBets = useMemo(() => {
-        return bets.filter((bet) => bet.circuit === nextCircuit.circuitID);
-    }, [bets, nextCircuit]);
+        return bets.filter((bet) => bet.circuit === lastCircuit.circuitID);
+    }, [bets, lastCircuit]);
 
     // Función para manejar los cambios en los podiums
     const handlePodiumChange = (category, updatedPodium) => {
@@ -69,7 +70,6 @@ export default function Team() {
             console.log(saveBet);
         } catch (error) {
             console.error(error);
-            alert('Error guardando su apuesta');
         }
     };
 
@@ -80,7 +80,10 @@ export default function Team() {
                     'https://fantasygpback.onrender.com/riders'
                 );
                 if (!response.ok)
-                    return alert('Algo fue mal consiguiendo los pilotos');
+                    console.error(
+                        'Algo fue mal consiguiendo los pilotos',
+                        response
+                    );
                 const riders = await response.json();
                 setMoto3Riders(
                     riders.filter((rider) => rider.category === 'moto3')
@@ -94,20 +97,22 @@ export default function Team() {
                 setMotoGPRiders(motoGP);
             } catch (error) {
                 console.error(error);
-                alert('Error al obtener los pilotos');
             }
         };
         if (motoGPRiders.length === 0 || !motoGPRiders) fetchRiders();
     }, []);
 
     useEffect(() => {
-        const fetchRiders = async () => {
+        const fetchNextCircuit = async () => {
             try {
                 const response = await fetch(
                     'https://fantasygpback.onrender.com/nextCircuit'
                 );
                 if (!response.ok)
-                    return alert('Algo fue mal consiguiendo los circuitos');
+                    return console.error(
+                        'Algo fue mal consiguiendo los circuitos',
+                        response
+                    );
                 const circuit = await response.json();
                 setNextCircuit(circuit);
                 setPodiums((prevPodium) => ({
@@ -116,10 +121,29 @@ export default function Team() {
                 }));
             } catch (error) {
                 console.error(error);
-                alert('Error al obtener los circuitos');
             }
         };
-        if (motoGPRiders.length === 0 || !motoGPRiders) fetchRiders();
+        if (motoGPRiders.length === 0 || !motoGPRiders) fetchNextCircuit();
+    }, []);
+
+    useEffect(() => {
+        const fetchLastCircuit = async () => {
+            try {
+                const response = await fetch(
+                    'http://localhost:5000/lastCircuit'
+                );
+                if (!response.ok)
+                    return console.error(
+                        'Algo fue mal consiguiendo el último circuito',
+                        response
+                    );
+                const circuit = await response.json();
+                setLastCircuit(circuit);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchLastCircuit();
     }, []);
 
     useEffect(() => {
@@ -129,12 +153,14 @@ export default function Team() {
                     'https://fantasygpback.onrender.com/bets'
                 );
                 if (!betsResponse.ok)
-                    return alert('Algo fue mal consiguiendo las apuestas');
+                    return console.error(
+                        'Algo fue mal consiguiendo las apuestas',
+                        betsResponse
+                    );
                 const betsData = await betsResponse.json();
                 setBets(betsData);
             } catch (error) {
                 console.error(error);
-                alert('Error al obtener las apuestas');
             }
         };
         if (bets.length === 0 || !bets) fetchBets();
@@ -204,7 +230,7 @@ export default function Team() {
                 </div>
             </form>
             {nextCircuitBets.length > 0 &&
-                new Date() > new Date(nextCircuit.due_date) && (
+                new Date() > new Date(lastCircuit.due_date) && (
                     <div>
                         <h3>Apuestas para {nextCircuit.name}</h3>
                         <table className={styles.standingsTable}>
