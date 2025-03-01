@@ -24,6 +24,10 @@ export default function Team() {
         return bets.filter((bet) => bet.circuit === lastCircuit.circuitID);
     }, [bets, lastCircuit]);
 
+    const nextCircuitBets = useMemo(() => {
+        return bets.filter((bet) => bet.circuit === nextCircuit.circuitID);
+    }, [bets, nextCircuit]);
+
     // Función para manejar los cambios en los podiums
     const handlePodiumChange = (category, updatedPodium) => {
         setPodiums((prevPodiums) => ({
@@ -183,6 +187,11 @@ export default function Team() {
                         <option value=''>Seleccionar</option>
                         {nextCircuit.name &&
                             Object.keys(users).map((userKey) => {
+                                if (
+                                    !nextCircuitBets ||
+                                    nextCircuitBets.length === 0
+                                )
+                                    return;
                             const userBetExists = nextCircuitBets.find(
                                 (bet) => bet.user === userKey
                             );
@@ -248,7 +257,8 @@ export default function Team() {
                                     <tr key={bet._id}>
                                         <td>{users[bet.user]}</td>
                                         <td>
-                                            {moto3Riders
+                                            {moto3Riders.length > 0 &&
+                                                moto3Riders
                                                 .find(
                                                     (rider) =>
                                                         rider.riderID ===
@@ -258,7 +268,8 @@ export default function Team() {
                                                 .slice(0, 2)
                                                 .join(' ')}
                                             <br />
-                                            {moto3Riders
+                                            {moto3Riders.length > 0 &&
+                                                moto3Riders
                                                 .find(
                                                     (rider) =>
                                                         rider.riderID ===
@@ -268,7 +279,8 @@ export default function Team() {
                                                 .slice(0, 2)
                                                 .join(' ')}
                                             <br />
-                                            {moto3Riders
+                                            {moto3Riders.length > 0 &&
+                                                moto3Riders
                                                 .find(
                                                     (rider) =>
                                                         rider.riderID ===
@@ -279,7 +291,8 @@ export default function Team() {
                                                 .join(' ')}
                                         </td>
                                         <td>
-                                            {moto2Riders
+                                            {moto2Riders.length > 0 &&
+                                                moto2Riders
                                                 .find(
                                                     (rider) =>
                                                         rider.riderID ===
@@ -289,7 +302,8 @@ export default function Team() {
                                                 .slice(0, 2)
                                                 .join(' ')}
                                             <br />
-                                            {moto2Riders
+                                            {moto2Riders.length > 0 &&
+                                                moto2Riders
                                                 .find(
                                                     (rider) =>
                                                         rider.riderID ===
@@ -299,7 +313,8 @@ export default function Team() {
                                                 .slice(0, 2)
                                                 .join(' ')}
                                             <br />
-                                            {moto2Riders
+                                            {moto2Riders.length > 0 &&
+                                                moto2Riders
                                                 .find(
                                                     (rider) =>
                                                         rider.riderID ===
@@ -310,7 +325,8 @@ export default function Team() {
                                                 .join(' ')}
                                         </td>
                                         <td>
-                                            {motoGPRiders
+                                            {motoGPRiders.length > 0 &&
+                                                motoGPRiders
                                                 .find(
                                                     (rider) =>
                                                         rider.riderID ===
@@ -320,7 +336,8 @@ export default function Team() {
                                                 .slice(0, 2)
                                                 .join(' ')}
                                             <br />
-                                            {motoGPRiders
+                                            {motoGPRiders.length > 0 &&
+                                                motoGPRiders
                                                 .find(
                                                     (rider) =>
                                                         rider.riderID ===
@@ -330,7 +347,8 @@ export default function Team() {
                                                 .slice(0, 2)
                                                 .join(' ')}
                                             <br />
-                                            {motoGPRiders
+                                            {motoGPRiders.length > 0 &&
+                                                motoGPRiders
                                                 .find(
                                                     (rider) =>
                                                         rider.riderID ===
