@@ -242,7 +242,8 @@ export default function Team() {
             {lastCircuitBets.length > 0 &&
                 new Date() > new Date(lastCircuit.due_date) && (
                     <div>
-                        <h3>Apuestas para {lastCircuit.name}</h3>
+                        <h3>Apuestas para</h3>
+                        <h3>{lastCircuit.name}</h3>
                         <table className={styles.standingsTable}>
                             <thead>
                                 <tr>
@@ -258,6 +259,7 @@ export default function Team() {
                                         <td>{users[bet.user]}</td>
                                         <td>
                                             {moto3Riders.length > 0 &&
+                                                '1º ' +
                                                 moto3Riders
                                                 .find(
                                                     (rider) =>
@@ -269,6 +271,7 @@ export default function Team() {
                                                 .join(' ')}
                                             <br />
                                             {moto3Riders.length > 0 &&
+                                                '2º ' +
                                                 moto3Riders
                                                 .find(
                                                     (rider) =>
@@ -280,6 +283,7 @@ export default function Team() {
                                                 .join(' ')}
                                             <br />
                                             {moto3Riders.length > 0 &&
+                                                '3º ' +
                                                 moto3Riders
                                                 .find(
                                                     (rider) =>
@@ -292,6 +296,7 @@ export default function Team() {
                                         </td>
                                         <td>
                                             {moto2Riders.length > 0 &&
+                                                '1º ' +
                                                 moto2Riders
                                                 .find(
                                                     (rider) =>
@@ -303,6 +308,7 @@ export default function Team() {
                                                 .join(' ')}
                                             <br />
                                             {moto2Riders.length > 0 &&
+'2º ' +
                                                 moto2Riders
                                                 .find(
                                                     (rider) =>
@@ -314,6 +320,7 @@ export default function Team() {
                                                 .join(' ')}
                                             <br />
                                             {moto2Riders.length > 0 &&
+'3º ' +
                                                 moto2Riders
                                                 .find(
                                                     (rider) =>
@@ -326,6 +333,7 @@ export default function Team() {
                                         </td>
                                         <td>
                                             {motoGPRiders.length > 0 &&
+'1º ' +
                                                 motoGPRiders
                                                 .find(
                                                     (rider) =>
@@ -337,17 +345,20 @@ export default function Team() {
                                                 .join(' ')}
                                             <br />
                                             {motoGPRiders.length > 0 &&
+'2º ' +
                                                 motoGPRiders
                                                 .find(
                                                     (rider) =>
                                                         rider.riderID ===
-                                                        bet.motoGP.second
+                                                        bet.motoGP
+.second
                                                 )
                                                 .fullName.split(' ')
                                                 .slice(0, 2)
                                                 .join(' ')}
                                             <br />
                                             {motoGPRiders.length > 0 &&
+'3º ' +
                                                 motoGPRiders
                                                 .find(
                                                     (rider) =>
