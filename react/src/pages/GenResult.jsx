@@ -57,8 +57,15 @@ export default function GenResult() {
                 );
                 if (!response.ok)
                     return alert('Algo fue mal consiguiendo los circuitos');
+                const resultsResponse = await fetch(
+                    'https://fantasygpback.onrender.com/results'
+                );
+                if (resultsResponse.ok) {
+                    return alert('Algo fue mal consiguiendo los resultados');
+                }
                 const circuits = await response.json();
-                const soonCircuit = circuits.filter((circuit) => {
+                const results = await resultsResponse.json();
+                const recentFinishedCircuit = circuits.filter((circuit) => {
                     const raceDate = new Date(circuit.date);
                     const today = new Date();
                     return (
@@ -66,7 +73,15 @@ export default function GenResult() {
                         today.getTime() <= raceDate.getTime() + 3 * 864e5
                     );
                 });
-                setCircuits(soonCircuit);
+                const resultExistsForCurrentCircuit = results.some(
+                    (result) =>
+                        result.circuit === recentFinishedCircuit[0].circuitID
+                );
+                if (resultExistsForCurrentCircuit) {
+                    alert('Ya existe un resultado registrado');
+                    return;
+                }
+                setCircuits(recentFinishedCircuit);
             } catch (error) {
                 console.error(error);
                 alert('Error al obtener los circuitos');
@@ -77,11 +92,6 @@ export default function GenResult() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Resultados de los Podiums:');
-        console.log('Circuit: ', podiums.circuit);
-        console.log('Moto3:', podiums.moto3);
-        console.log('Moto2:', podiums.moto2);
-        console.log('MotoGP:', podiums.motoGP);
 
         try {
             const response = await fetch(
@@ -102,6 +112,7 @@ export default function GenResult() {
             }
             const saveBet = await response.json();
             console.log(saveBet);
+            alert('Resultado guardado con éxito');
         } catch (error) {
             console.error(error);
             alert('Error guardando su resultado');

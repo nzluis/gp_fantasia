@@ -46,12 +46,6 @@ export default function Team() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log('Resultados de los Podiums:');
-        console.log('User:', podiums.user);
-        console.log('Circuit: ', podiums.circuit);
-        console.log('Moto3:', podiums.moto3);
-        console.log('Moto2:', podiums.moto2);
-        console.log('MotoGP:', podiums.motoGP);
 
         try {
             const response = await fetch(
@@ -60,8 +54,7 @@ export default function Team() {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(podiums),
-                }
-            );
+            });
             if (!response.ok) {
                 const error = await response.json();
                 if (error.error) {
@@ -72,8 +65,10 @@ export default function Team() {
             }
             const saveBet = await response.json();
             console.log(saveBet);
+            alert('Apuesta guardada correctamente');
         } catch (error) {
             console.error(error);
+            alert('Error guardando su apuesta');
         }
     };
 
@@ -173,72 +168,6 @@ export default function Team() {
     return (
         <div className={styles.container}>
             {/* <h1>Tu apuesta</h1> */}
-            <form onSubmit={handleSubmit}>
-                <h3>{nextCircuit.name ?? nextCircuit.message}</h3>
-                <div>
-                    <label>User: </label>
-                    <select
-                        value={podiums.user}
-                        onChange={(e) =>
-                            handlePodiumChange('user', e.target.value)
-                        }
-                        required
-                    >
-                        <option value=''>Seleccionar</option>
-                        {nextCircuit.name &&
-                            Object.keys(users).map((userKey) => {
-                                if (
-                                    !nextCircuitBets ||
-                                    nextCircuitBets.length === 0
-                                )
-                                    return;
-                            const userBetExists = nextCircuitBets.find(
-                                (bet) => bet.user === userKey
-                            );
-                            if (!userBetExists) {
-                                return (
-                            <option key={userKey} value={userKey}>
-                                {users[userKey]}
-                            </option>
-                                );
-                            }
-                            return null;
-                        })}
-                    </select>
-                </div>
-                <PodiumForm
-                    riders={moto3Riders}
-                    category='moto3'
-                    onPodiumChange={handlePodiumChange}
-                />
-                <PodiumForm
-                    riders={moto2Riders}
-                    category='moto2'
-                    onPodiumChange={handlePodiumChange}
-                />
-                <PodiumForm
-                    riders={motoGPRiders}
-                    category='motoGP'
-                    onPodiumChange={handlePodiumChange}
-                />
-                <div className={styles.submitArea}>
-                    <button type='submit'>Enviar Resultados</button>
-                    {/* <div className={styles.checkbox}>
-                        <label
-                            className={styles.checkboxLabel}
-                            htmlFor='forceSend'
-                        >
-                            Force
-                        </label>
-                        <input
-                            type='checkbox'
-                            id='forceSend'
-                            checked={podiums.forceSend}
-                            onChange={handleCheckboxChange}
-                        />
-                    </div> */}
-                </div>
-            </form>
             {lastCircuitBets.length > 0 &&
                 new Date() > new Date(lastCircuit.due_date) && (
                     <div>
@@ -247,7 +176,7 @@ export default function Team() {
                         <table className={styles.standingsTable}>
                             <thead>
                                 <tr>
-                                    <th>User</th>
+                                    <th></th>
                                     <th>Moto3</th>
                                     <th>Moto2</th>
                                     <th>MotoGP</th>
@@ -375,6 +304,72 @@ export default function Team() {
                         </table>
                     </div>
                 )}
+            <form onSubmit={handleSubmit}>
+                <h3>{nextCircuit.name ?? nextCircuit.message}</h3>
+                <div>
+                    <label>User: </label>
+                    <select
+                        value={podiums.user}
+                        onChange={(e) =>
+                            handlePodiumChange('user', e.target.value)
+                        }
+                        required
+                    >
+                        <option value=''>Seleccionar</option>
+                        {nextCircuit.name &&
+                            Object.keys(users).map((userKey) => {
+                                if (
+                                    !nextCircuitBets ||
+                                    nextCircuitBets.length === 0
+                                )
+                                    return;
+                                const userBetExists = nextCircuitBets.find(
+                                    (bet) => bet.user === userKey
+                                );
+                                if (!userBetExists) {
+                                    return (
+                                        <option key={userKey} value={userKey}>
+                                            {users[userKey]}
+                                        </option>
+                                    );
+                                }
+                                return null;
+                            })}
+                    </select>
+                </div>
+                <PodiumForm
+                    riders={moto3Riders}
+                    category='moto3'
+                    onPodiumChange={handlePodiumChange}
+                />
+                <PodiumForm
+                    riders={moto2Riders}
+                    category='moto2'
+                    onPodiumChange={handlePodiumChange}
+                />
+                <PodiumForm
+                    riders={motoGPRiders}
+                    category='motoGP'
+                    onPodiumChange={handlePodiumChange}
+                />
+                <div className={styles.submitArea}>
+                    <button type='submit'>Enviar Resultados</button>
+                    {/* <div className={styles.checkbox}>
+                        <label
+                            className={styles.checkboxLabel}
+                            htmlFor='forceSend'
+                        >
+                            Force
+                        </label>
+                        <input
+                            type='checkbox'
+                            id='forceSend'
+                            checked={podiums.forceSend}
+                            onChange={handleCheckboxChange}
+                        />
+                    </div> */}
+                </div>
+            </form>
         </div>
     );
 }
