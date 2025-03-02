@@ -60,7 +60,7 @@ export default function GenResult() {
                 const resultsResponse = await fetch(
                     'https://fantasygpback.onrender.com/results'
                 );
-                if (resultsResponse.ok) {
+                if (!resultsResponse.ok) {
                     return alert('Algo fue mal consiguiendo los resultados');
                 }
                 const circuits = await response.json();
