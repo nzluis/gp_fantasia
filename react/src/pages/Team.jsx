@@ -65,6 +65,14 @@ export default function Team() {
             }
             const saveBet = await response.json();
             console.log(saveBet);
+            setPodiums({
+                user: '',
+                circuit: '',
+                forceSend: false,
+                moto3: { first: '', second: '', third: '' },
+                moto2: { first: '', second: '', third: '' },
+                motoGP: { first: '', second: '', third: '' },
+            });
             alert('Apuesta guardada correctamente');
         } catch (error) {
             console.error(error);

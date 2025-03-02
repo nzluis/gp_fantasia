@@ -112,6 +112,12 @@ export default function GenResult() {
             }
             const saveBet = await response.json();
             console.log(saveBet);
+            setPodiums({
+                circuit: '',
+                moto3: { first: '', second: '', third: '' },
+                moto2: { first: '', second: '', third: '' },
+                motoGP: { first: '', second: '', third: '' },
+            });
             alert('Resultado guardado con éxito');
         } catch (error) {
             console.error(error);
