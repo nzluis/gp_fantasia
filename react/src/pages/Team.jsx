@@ -176,9 +176,10 @@ export default function Team() {
     return (
         <div className={styles.container}>
             {/* <h1>Tu apuesta</h1> */}
-            {lastCircuitBets.length > 0 &&
+            {!nextCircuit.name &&
+                lastCircuitBets.length > 0 &&
                 new Date() > new Date(lastCircuit.due_date) && (
-                    <div>
+                    <div className={styles.betsBoard}>
                         <h3>Apuestas para</h3>
                         <h3>{lastCircuit.name}</h3>
                         <table className={styles.standingsTable}>
