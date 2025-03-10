@@ -327,15 +327,11 @@ export default function Team() {
                         <option value=''>Seleccionar</option>
                         {nextCircuit.name &&
                             Object.keys(users).map((userKey) => {
-                                if (
-                                    !nextCircuitBets ||
-                                    nextCircuitBets.length === 0
-                                )
-                                    return;
-                                const userBetExists = nextCircuitBets.find(
+                                const userBet =
+                                    nextCircuitBets?.find(
                                     (bet) => bet.user === userKey
-                                );
-                                if (!userBetExists) {
+                                    ) || false;
+                                if (!userBet) {
                                     return (
                                         <option key={userKey} value={userKey}>
                                             {users[userKey]}
