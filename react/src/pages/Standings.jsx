@@ -10,9 +10,9 @@ export default function Standings() {
 
     useEffect(() => {
         async function fetchData() {
-            const resultsResponse = await fetch(getHost + '/results');
+            const resultsResponse = await fetch(getHost() + '/results');
             const resultsData = await resultsResponse.json();
-            const betsResponse = await fetch(getHost + '/bets');
+            const betsResponse = await fetch(getHost() + '/bets');
             const betsData = await betsResponse.json();
 
             setResults(resultsData);

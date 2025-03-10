@@ -49,7 +49,7 @@ export default function Team() {
         e.preventDefault();
 
         try {
-            const response = await fetch(getHost + '/bets/create', {
+            const response = await fetch(getHost() + '/bets/create', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(podiums),
@@ -82,7 +82,7 @@ export default function Team() {
     useEffect(() => {
         const fetchRiders = async () => {
             try {
-                const response = await fetch(getHost + '/riders');
+                const response = await fetch(getHost() + '/riders');
                 if (!response.ok)
                     console.error(
                         'Algo fue mal consiguiendo los pilotos',
@@ -109,7 +109,7 @@ export default function Team() {
     useEffect(() => {
         const fetchNextCircuit = async () => {
             try {
-                const response = await fetch(getHost + '/nextCircuit');
+                const response = await fetch(getHost() + '/nextCircuit');
                 if (!response.ok)
                     return console.error(
                         'Algo fue mal consiguiendo los circuitos',
@@ -131,7 +131,7 @@ export default function Team() {
     useEffect(() => {
         const fetchLastCircuit = async () => {
             try {
-                const response = await fetch(getHost + '/lastCircuit');
+                const response = await fetch(getHost() + '/lastCircuit');
                 if (!response.ok)
                     return console.error(
                         'Algo fue mal consiguiendo el último circuito',
@@ -149,7 +149,7 @@ export default function Team() {
     useEffect(() => {
         const fetchBets = async () => {
             try {
-                const betsResponse = await fetch(getHost + '/bets');
+                const betsResponse = await fetch(getHost() + '/bets');
                 if (!betsResponse.ok)
                     return console.error(
                         'Algo fue mal consiguiendo las apuestas',

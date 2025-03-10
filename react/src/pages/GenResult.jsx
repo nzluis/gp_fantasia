@@ -26,7 +26,7 @@ export default function GenResult() {
     useEffect(() => {
         const fetchRiders = async () => {
             try {
-                const response = await fetch(getHost + '/riders');
+                const response = await fetch(getHost() + '/riders');
                 if (!response.ok)
                     return alert('Algo fue mal consiguiendo los pilotos');
                 const riders = await response.json();
@@ -51,10 +51,10 @@ export default function GenResult() {
     useEffect(() => {
         const fetchCircuits = async () => {
             try {
-                const response = await fetch(getHost + '/circuits');
+                const response = await fetch(getHost() + '/circuits');
                 if (!response.ok)
                     return alert('Algo fue mal consiguiendo los circuitos');
-                const resultsResponse = await fetch(getHost + '/results');
+                const resultsResponse = await fetch(getHost() + '/results');
                 if (!resultsResponse.ok) {
                     return alert('Algo fue mal consiguiendo los resultados');
                 }
@@ -89,7 +89,7 @@ export default function GenResult() {
         e.preventDefault();
 
         try {
-            const response = await fetch(getHost + '/results/create', {
+            const response = await fetch(getHost() + '/results/create', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(podiums),
