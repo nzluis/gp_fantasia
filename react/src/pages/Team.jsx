@@ -3,6 +3,7 @@ import PodiumForm from '../components/PodiumForm/PodiumForm';
 import styles from './Team.module.css';
 import { useEffect } from 'react';
 import { users } from '../utils/constants';
+import getHost from '../utils/getHost';
 
 export default function Team() {
     const [moto3Riders, setMoto3Riders] = useState([]);
@@ -48,12 +49,10 @@ export default function Team() {
         e.preventDefault();
 
         try {
-            const response = await fetch(
-                'https://fantasygpback.onrender.com/bets/create',
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(podiums),
+            const response = await fetch(getHost + '/bets/create', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(podiums),
             });
             if (!response.ok) {
                 const error = await response.json();
@@ -83,9 +82,7 @@ export default function Team() {
     useEffect(() => {
         const fetchRiders = async () => {
             try {
-                const response = await fetch(
-                    'https://fantasygpback.onrender.com/riders'
-                );
+                const response = await fetch(getHost + '/riders');
                 if (!response.ok)
                     console.error(
                         'Algo fue mal consiguiendo los pilotos',
@@ -112,9 +109,7 @@ export default function Team() {
     useEffect(() => {
         const fetchNextCircuit = async () => {
             try {
-                const response = await fetch(
-                    'https://fantasygpback.onrender.com/nextCircuit'
-                );
+                const response = await fetch(getHost + '/nextCircuit');
                 if (!response.ok)
                     return console.error(
                         'Algo fue mal consiguiendo los circuitos',
@@ -136,9 +131,7 @@ export default function Team() {
     useEffect(() => {
         const fetchLastCircuit = async () => {
             try {
-                const response = await fetch(
-                    'https://fantasygpback.onrender.com/lastCircuit'
-                );
+                const response = await fetch(getHost + '/lastCircuit');
                 if (!response.ok)
                     return console.error(
                         'Algo fue mal consiguiendo el último circuito',
@@ -156,9 +149,7 @@ export default function Team() {
     useEffect(() => {
         const fetchBets = async () => {
             try {
-                const betsResponse = await fetch(
-                    'https://fantasygpback.onrender.com/bets'
-                );
+                const betsResponse = await fetch(getHost + '/bets');
                 if (!betsResponse.ok)
                     return console.error(
                         'Algo fue mal consiguiendo las apuestas',
@@ -198,114 +189,114 @@ export default function Team() {
                                         <td>
                                             {moto3Riders.length > 0 &&
                                                 '1º ' +
-                                                moto3Riders
-                                                .find(
-                                                    (rider) =>
-                                                        rider.riderID ===
-                                                        bet.moto3.first
-                                                )
-                                                .fullName.split(' ')
-                                                .slice(0, 2)
-                                                .join(' ')}
+                                                    moto3Riders
+                                                        .find(
+                                                            (rider) =>
+                                                                rider.riderID ===
+                                                                bet.moto3.first
+                                                        )
+                                                        .fullName.split(' ')
+                                                        .slice(0, 2)
+                                                        .join(' ')}
                                             <br />
                                             {moto3Riders.length > 0 &&
                                                 '2º ' +
-                                                moto3Riders
-                                                .find(
-                                                    (rider) =>
-                                                        rider.riderID ===
-                                                        bet.moto3.second
-                                                )
-                                                .fullName.split(' ')
-                                                .slice(0, 2)
-                                                .join(' ')}
+                                                    moto3Riders
+                                                        .find(
+                                                            (rider) =>
+                                                                rider.riderID ===
+                                                                bet.moto3.second
+                                                        )
+                                                        .fullName.split(' ')
+                                                        .slice(0, 2)
+                                                        .join(' ')}
                                             <br />
                                             {moto3Riders.length > 0 &&
                                                 '3º ' +
-                                                moto3Riders
-                                                .find(
-                                                    (rider) =>
-                                                        rider.riderID ===
-                                                        bet.moto3.third
-                                                )
-                                                .fullName.split(' ')
-                                                .slice(0, 2)
-                                                .join(' ')}
+                                                    moto3Riders
+                                                        .find(
+                                                            (rider) =>
+                                                                rider.riderID ===
+                                                                bet.moto3.third
+                                                        )
+                                                        .fullName.split(' ')
+                                                        .slice(0, 2)
+                                                        .join(' ')}
                                         </td>
                                         <td>
                                             {moto2Riders.length > 0 &&
                                                 '1º ' +
-                                                moto2Riders
-                                                .find(
-                                                    (rider) =>
-                                                        rider.riderID ===
-                                                        bet.moto2.first
-                                                )
-                                                .fullName.split(' ')
-                                                .slice(0, 2)
-                                                .join(' ')}
+                                                    moto2Riders
+                                                        .find(
+                                                            (rider) =>
+                                                                rider.riderID ===
+                                                                bet.moto2.first
+                                                        )
+                                                        .fullName.split(' ')
+                                                        .slice(0, 2)
+                                                        .join(' ')}
                                             <br />
                                             {moto2Riders.length > 0 &&
-'2º ' +
-                                                moto2Riders
-                                                .find(
-                                                    (rider) =>
-                                                        rider.riderID ===
-                                                        bet.moto2.second
-                                                )
-                                                .fullName.split(' ')
-                                                .slice(0, 2)
-                                                .join(' ')}
+                                                '2º ' +
+                                                    moto2Riders
+                                                        .find(
+                                                            (rider) =>
+                                                                rider.riderID ===
+                                                                bet.moto2.second
+                                                        )
+                                                        .fullName.split(' ')
+                                                        .slice(0, 2)
+                                                        .join(' ')}
                                             <br />
                                             {moto2Riders.length > 0 &&
-'3º ' +
-                                                moto2Riders
-                                                .find(
-                                                    (rider) =>
-                                                        rider.riderID ===
-                                                        bet.moto2.third
-                                                )
-                                                .fullName.split(' ')
-                                                .slice(0, 2)
-                                                .join(' ')}
+                                                '3º ' +
+                                                    moto2Riders
+                                                        .find(
+                                                            (rider) =>
+                                                                rider.riderID ===
+                                                                bet.moto2.third
+                                                        )
+                                                        .fullName.split(' ')
+                                                        .slice(0, 2)
+                                                        .join(' ')}
                                         </td>
                                         <td>
                                             {motoGPRiders.length > 0 &&
-'1º ' +
-                                                motoGPRiders
-                                                .find(
-                                                    (rider) =>
-                                                        rider.riderID ===
-                                                        bet.motoGP.first
-                                                )
-                                                .fullName.split(' ')
-                                                .slice(0, 2)
-                                                .join(' ')}
+                                                '1º ' +
+                                                    motoGPRiders
+                                                        .find(
+                                                            (rider) =>
+                                                                rider.riderID ===
+                                                                bet.motoGP.first
+                                                        )
+                                                        .fullName.split(' ')
+                                                        .slice(0, 2)
+                                                        .join(' ')}
                                             <br />
                                             {motoGPRiders.length > 0 &&
-'2º ' +
-                                                motoGPRiders
-                                                .find(
-                                                    (rider) =>
-                                                        rider.riderID ===
-                                                        bet.motoGP
-.second
-                                                )
-                                                .fullName.split(' ')
-                                                .slice(0, 2)
-                                                .join(' ')}
+                                                '2º ' +
+                                                    motoGPRiders
+                                                        .find(
+                                                            (rider) =>
+                                                                rider.riderID ===
+                                                                bet.motoGP
+                                                                    .second
+                                                        )
+                                                        .fullName.split(' ')
+                                                        .slice(0, 2)
+                                                        .join(' ')}
                                             <br />
                                             {motoGPRiders.length > 0 &&
-'3º ' +
-                                                motoGPRiders
-                                                .find(
-                                                    (rider) =>
-                                                        rider.riderID ===
-                                                        bet.motoGP.third
-                                                )
-                                                .fullName.split(' ')
-                                                .slice(0, 2)
-                                                .join(' ')}
+                                                '3º ' +
+                                                    motoGPRiders
+                                                        .find(
+                                                            (rider) =>
+                                                                rider.riderID ===
+                                                                bet.motoGP.third
+                                                        )
+                                                        .fullName.split(' ')
+                                                        .slice(0, 2)
+                                                        .join(' ')}
                                         </td>
                                     </tr>
                                 ))}
@@ -329,7 +320,7 @@ export default function Team() {
                             Object.keys(users).map((userKey) => {
                                 const userBet =
                                     nextCircuitBets?.find(
-                                    (bet) => bet.user === userKey
+                                        (bet) => bet.user === userKey
                                     ) || false;
                                 if (!userBet) {
                                     return (

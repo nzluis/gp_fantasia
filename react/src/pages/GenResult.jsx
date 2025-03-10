@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import PodiumForm from '../components/PodiumForm/PodiumForm';
 import styles from './GenResult.module.css';
+import getHost from '../utils/getHost';
 
 export default function GenResult() {
     const [moto3Riders, setMoto3Riders] = useState([]);
@@ -25,9 +26,7 @@ export default function GenResult() {
     useEffect(() => {
         const fetchRiders = async () => {
             try {
-                const response = await fetch(
-                    'https://fantasygpback.onrender.com/riders'
-                );
+                const response = await fetch(getHost + '/riders');
                 if (!response.ok)
                     return alert('Algo fue mal consiguiendo los pilotos');
                 const riders = await response.json();
@@ -52,14 +51,10 @@ export default function GenResult() {
     useEffect(() => {
         const fetchCircuits = async () => {
             try {
-                const response = await fetch(
-                    'https://fantasygpback.onrender.com/circuits'
-                );
+                const response = await fetch(getHost + '/circuits');
                 if (!response.ok)
                     return alert('Algo fue mal consiguiendo los circuitos');
-                const resultsResponse = await fetch(
-                    'https://fantasygpback.onrender.com/results'
-                );
+                const resultsResponse = await fetch(getHost + '/results');
                 if (!resultsResponse.ok) {
                     return alert('Algo fue mal consiguiendo los resultados');
                 }
@@ -94,14 +89,11 @@ export default function GenResult() {
         e.preventDefault();
 
         try {
-            const response = await fetch(
-                'https://fantasygpback.onrender.com/results/create',
-                {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(podiums),
-                }
-            );
+            const response = await fetch(getHost + '/results/create', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(podiums),
+            });
             if (!response.ok) {
                 const error = await response.json();
                 if (error.error) {

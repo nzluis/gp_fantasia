@@ -3,6 +3,7 @@ import styles from './Results.module.css';
 import { convertPos } from '../utils/constants';
 import { calculatePoints } from '../utils/calculatePoints';
 import { toUpperise } from '../utils/toUpperise';
+import getHost from '../utils/getHost';
 
 export default function Results() {
     const [results, setResults] = useState([]);
@@ -11,13 +12,9 @@ export default function Results() {
 
     useEffect(() => {
         async function fetchData() {
-            const resultsResponse = await fetch(
-                'https://fantasygpback.onrender.com/results'
-            );
+            const resultsResponse = await fetch(getHost + '/results');
             const resultsData = await resultsResponse.json();
-            const betsResponse = await fetch(
-                'https://fantasygpback.onrender.com/bets'
-            );
+            const betsResponse = await fetch(getHost + '/bets');
             const betsData = await betsResponse.json();
 
             setResults(resultsData);
