@@ -10,7 +10,7 @@ export const calculatePoints = (podium, userBet) => {
             points += [6, 5, 4][index];
             correctPositions += 1;
         } else if (Object.values(podium).includes(betRider)) {
-            points += 1;
+            points += 2;
         }
     });
 
