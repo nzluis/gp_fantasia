@@ -230,7 +230,7 @@ export default function Results() {
                                                                                               ).includes(
                                                                                                   rider
                                                                                               )
-                                                                                            ? 1
+                                                                                            ? 2
                                                                                             : 0}
                                                                                     </td>
                                                                                 </tr>
