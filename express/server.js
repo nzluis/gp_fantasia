@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 // Conectar a MongoDB
 mongoose.connect(
-    `mongodb+srv://gp_user:${process.env.MONGO_PASS}@cluster0.cd0w6.mongodb.net/testing`
+    `mongodb+srv://gp_user:${process.env.MONGO_PASS}@cluster0.cd0w6.mongodb.net/season26`
 );
 
 const riderSchema = new mongoose.Schema({
