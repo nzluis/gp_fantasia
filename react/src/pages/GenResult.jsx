@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import PodiumForm from '../components/PodiumForm/PodiumForm';
 import Spinner from '../components/Spinner/Spinner';
 import { useMinLoadingTime } from '../hooks/useMinLoadingTime';
+import toast from 'react-hot-toast';
 import styles from './GenResult.module.css';
 import getHost from '../utils/getHost';
 
@@ -33,7 +34,7 @@ export default function GenResult() {
             try {
                 const response = await fetch(getHost() + '/riders');
                 if (!response.ok)
-                    return alert('Algo fue mal consiguiendo los pilotos');
+                    return toast.error('Algo fue mal consiguiendo los pilotos');
                 const riders = await response.json();
                 setMoto3Riders(
                     riders.filter((rider) => rider.category === 'moto3')
@@ -47,7 +48,7 @@ export default function GenResult() {
                 setMotoGPRiders(motoGP);
             } catch (error) {
                 console.error(error);
-                alert('Error al obtener los pilotos');
+                toast.error('Error al obtener los pilotos');
             }
         };
         if (motoGPRiders.length === 0 || !motoGPRiders) fetchRiders();
@@ -58,10 +59,12 @@ export default function GenResult() {
             try {
                 const response = await fetch(getHost() + '/circuits');
                 if (!response.ok)
-                    return alert('Algo fue mal consiguiendo los circuitos');
+                    return toast.error('Algo fue mal consiguiendo los circuitos');
                 const resultsResponse = await fetch(getHost() + '/results');
                 if (!resultsResponse.ok) {
-                    return alert('Algo fue mal consiguiendo los resultados');
+                    return toast.error(
+                        'Algo fue mal consiguiendo los resultados'
+                    );
                 }
                 const circuits = await response.json();
                 const results = await resultsResponse.json();
@@ -88,7 +91,7 @@ export default function GenResult() {
                 setCircuits(recentFinishedCircuit);
             } catch (error) {
                 console.error(error);
-                alert('Error al obtener los circuitos');
+                toast.error('Error al obtener los circuitos');
             } finally {
                 setLoading(false);
             }
@@ -108,10 +111,11 @@ export default function GenResult() {
             if (!response.ok) {
                 const error = await response.json();
                 if (error.error) {
-                    alert(error.message);
+                    toast.error(error.message);
                     return;
                 }
-                alert('Algo sucedió guardando su resultado');
+                toast.error('Algo sucedió guardando su resultado');
+                return;
             }
             const saveBet = await response.json();
             console.log(saveBet);
@@ -121,10 +125,10 @@ export default function GenResult() {
                 moto2: { first: '', second: '', third: '' },
                 motoGP: { first: '', second: '', third: '' },
             });
-            alert('Resultado guardado con éxito');
+            toast.success('Resultado guardado con éxito');
         } catch (error) {
             console.error(error);
-            alert('Error guardando su resultado');
+            toast.error('Error guardando su resultado');
         }
     };
 

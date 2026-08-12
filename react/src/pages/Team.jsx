@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import PodiumForm from '../components/PodiumForm/PodiumForm';
 import Spinner from '../components/Spinner/Spinner';
 import { useMinLoadingTime } from '../hooks/useMinLoadingTime';
+import toast from 'react-hot-toast';
 import styles from './Team.module.css';
 import { useEffect } from 'react';
 import { users } from '../utils/constants';
@@ -70,10 +71,11 @@ export default function Team() {
             if (!response.ok) {
                 const error = await response.json();
                 if (error.error) {
-                    alert(error.message);
+                    toast.error(error.message);
                     return;
                 }
-                alert('Algo sucedió guardando su apuesta');
+                toast.error('Algo sucedió guardando su apuesta');
+                return;
             }
             const saveBet = await response.json();
             console.log(saveBet);
@@ -85,10 +87,10 @@ export default function Team() {
                 moto2: { first: '', second: '', third: '' },
                 motoGP: { first: '', second: '', third: '' },
             });
-            alert('Apuesta guardada correctamente');
+            toast.success('Apuesta guardada correctamente');
         } catch (error) {
             console.error(error);
-            alert('Error guardando su apuesta');
+            toast.error('Error guardando su apuesta');
         }
     };
 

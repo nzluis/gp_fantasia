@@ -5,6 +5,7 @@ import {
     createBrowserRouter,
     createRoutesFromElements,
 } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import { Root } from './pages/Root';
 import Menu from './pages/Menu';
 import Team from './pages/Team';
@@ -31,11 +32,33 @@ const appRouter = createBrowserRouter(
 export default function App() {
     return (
         <>
-            {/* <AuthProvider> */}
-            {/* <Provider store={store}> */}
             <RouterProvider router={appRouter} />
-            {/* </Provider> */}
-            {/* </AuthProvider> */}
+            <Toaster
+                position='top-center'
+                toastOptions={{
+                    duration: 3500,
+                    style: {
+                        borderRadius: '12px',
+                        background: '#1f2933',
+                        color: '#fff',
+                        fontFamily: 'Inter, system-ui, sans-serif',
+                        fontSize: '15px',
+                        padding: '12px 16px',
+                    },
+                    success: {
+                        iconTheme: {
+                            primary: '#4caf50',
+                            secondary: '#fff',
+                        },
+                    },
+                    error: {
+                        iconTheme: {
+                            primary: '#e5484d',
+                            secondary: '#fff',
+                        },
+                    },
+                }}
+            />
         </>
     );
 }
