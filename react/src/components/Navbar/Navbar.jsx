@@ -9,26 +9,27 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 const links = [
-    { to: '/team', icon: faMotorcycle, title: 'Mi equipo' },
-    { to: '/resultados', icon: faFlagCheckered, title: 'Resultados' },
-    { to: '/clasificacion', icon: faRankingStar, title: 'Clasificación' },
-    { to: '/genresult', icon: faCalendarPlus, title: 'Registrar resultado' },
+    { to: '/team', icon: faMotorcycle, label: 'Apuesta' },
+    { to: '/resultados', icon: faFlagCheckered, label: 'Resultados' },
+    { to: '/clasificacion', icon: faRankingStar, label: 'Clasificación' },
+    { to: '/genresult', icon: faCalendarPlus, label: 'Subir' },
 ];
 
 export default function Navbar() {
     return (
         <nav className={styles.nav}>
             <div className={styles.links}>
-                {links.map(({ to, icon, title }) => (
+                {links.map(({ to, icon, label }) => (
                     <NavLink
                         key={to}
                         to={to}
-                        title={title}
+                        title={label}
                         className={({ isActive }) =>
                             isActive ? styles.active : styles.link
                         }
                     >
                         <FontAwesomeIcon icon={icon} />
+                        <span className={styles.label}>{label}</span>
                     </NavLink>
                 ))}
             </div>

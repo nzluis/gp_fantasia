@@ -4,7 +4,7 @@
     z-index: 50;
     display: flex;
     justify-content: center;
-    padding: 10px 12px;
+    padding: 10px 14px;
     background: rgba(255, 255, 255, 0.85);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
@@ -14,7 +14,8 @@
 
 .links {
     display: flex;
-    gap: 4px;
+    gap: 6px;
+    width: 100%;
 }
 
 .link,
@@ -22,11 +23,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    flex: 1;
+    padding: 10px 6px;
     border-radius: 12px;
     color: var(--text-muted);
+    font-size: 26px;
     transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.label {
+    display: none;
 }
 
 .link:hover {
@@ -50,12 +56,23 @@
     }
 
     .links {
+        display: flex;
+        max-width: 520px;
         gap: 8px;
     }
 
     .link,
     .active {
-        width: 48px;
-        height: 48px;
+        flex: 1;
+        padding: 12px 10px;
+        font-size: 22px;
+        justify-content: flex-start;
+        gap: 10px;
+    }
+
+    .label {
+        display: inline;
+        font-size: 14px;
+        font-weight: 600;
     }
 }
