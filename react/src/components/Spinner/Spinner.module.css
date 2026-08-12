@@ -1,0 +1,27 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+}
+
+.image {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+.circle {
+    width: 64px;
+    height: 64px;
+    border: 6px solid rgba(0, 0, 0, 0.15);
+    border-top-color: var(--accent-color, #d4145a);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
