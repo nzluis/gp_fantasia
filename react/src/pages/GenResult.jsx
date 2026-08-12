@@ -68,6 +68,10 @@ export default function GenResult() {
                         today.getTime() <= raceDate.getTime() + 3 * 864e5
                     );
                 });
+                if (recentFinishedCircuit.length === 0) {
+                    alert('No hay un circuito reciente para registrar el resultado');
+                    return;
+                }
                 const resultExistsForCurrentCircuit = results.some(
                     (result) =>
                         result.circuit === recentFinishedCircuit[0].circuitID
