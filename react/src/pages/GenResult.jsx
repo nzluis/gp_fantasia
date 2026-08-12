@@ -10,6 +10,7 @@ export default function GenResult() {
     const [motoGPRiders, setMotoGPRiders] = useState([]);
     const [circuits, setCircuits] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [noPendingResult, setNoPendingResult] = useState(false);
     const [podiums, setPodiums] = useState({
         circuit: '',
         moto3: { first: '', second: '', third: '' },
@@ -73,7 +74,7 @@ export default function GenResult() {
                     );
                 });
                 if (recentFinishedCircuit.length === 0) {
-                    alert('No hay un circuito reciente para registrar el resultado');
+                    setNoPendingResult(true);
                     return;
                 }
                 const resultExistsForCurrentCircuit = results.some(
@@ -81,7 +82,7 @@ export default function GenResult() {
                         result.circuit === recentFinishedCircuit[0].circuitID
                 );
                 if (resultExistsForCurrentCircuit) {
-                    alert('Ya existe un resultado registrado');
+                    setNoPendingResult(true);
                     return;
                 }
                 setCircuits(recentFinishedCircuit);
@@ -128,6 +129,19 @@ export default function GenResult() {
     };
 
     if (loading) return <Spinner />;
+
+    if (noPendingResult) {
+        return (
+            <div className={styles.emptyState}>
+                <p className={styles.emptyTitle}>
+                    No hay resultados por actualizar
+                </p>
+                <p className={styles.emptyText}>
+                    El resultado del último circuito ya está registrado.
+                </p>
+            </div>
+        );
+    }
 
     return (
         <div className={styles.container}>

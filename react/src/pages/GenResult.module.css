@@ -12,6 +12,32 @@
     margin: 0 0 16px;
 }
 
+.emptyState {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: 60vh;
+    padding: 24px;
+    gap: 8px;
+}
+
+.emptyTitle {
+    font-size: clamp(1.3rem, 6vw, 1.8rem);
+    font-weight: 800;
+    color: var(--primary-darker);
+    margin: 0;
+}
+
+.emptyText {
+    font-size: clamp(0.9rem, 4vw, 1rem);
+    color: var(--text-muted);
+    margin: 0;
+    max-width: 40ch;
+    line-height: 1.5;
+}
+
 .container form {
     margin-top: 8px;
 }
