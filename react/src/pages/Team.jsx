@@ -5,6 +5,14 @@ import { useEffect } from 'react';
 import { users } from '../utils/constants';
 import getHost from '../utils/getHost';
 
+const formatPodiumRider = (riders, riderID, position) => {
+    if (!riders.length || !riderID) return null;
+    const rider = riders.find((r) => r.riderID === riderID);
+    if (!rider) return null;
+    const shortName = rider.fullName.split(' ').slice(0, 2).join(' ');
+    return `${position}º ${shortName}`;
+};
+
 export default function Team() {
     const [moto3Riders, setMoto3Riders] = useState([]);
     const [moto2Riders, setMoto2Riders] = useState([]);
@@ -187,116 +195,61 @@ export default function Team() {
                                     <tr key={bet._id}>
                                         <td>{users[bet.user]}</td>
                                         <td>
-                                            {moto3Riders.length > 0 &&
-                                                '1º ' +
-                                                    moto3Riders
-                                                        .find(
-                                                            (rider) =>
-                                                                rider.riderID ===
-                                                                bet.moto3.first
-                                                        )
-                                                        .fullName.split(' ')
-                                                        .slice(0, 2)
-                                                        .join(' ')}
+                                            {formatPodiumRider(
+                                                moto3Riders,
+                                                bet.moto3.first,
+                                                '1'
+                                            )}
                                             <br />
-                                            {moto3Riders.length > 0 &&
-                                                '2º ' +
-                                                    moto3Riders
-                                                        .find(
-                                                            (rider) =>
-                                                                rider.riderID ===
-                                                                bet.moto3.second
-                                                        )
-                                                        .fullName.split(' ')
-                                                        .slice(0, 2)
-                                                        .join(' ')}
+                                            {formatPodiumRider(
+                                                moto3Riders,
+                                                bet.moto3.second,
+                                                '2'
+                                            )}
                                             <br />
-                                            {moto3Riders.length > 0 &&
-                                                '3º ' +
-                                                    moto3Riders
-                                                        .find(
-                                                            (rider) =>
-                                                                rider.riderID ===
-                                                                bet.moto3.third
-                                                        )
-                                                        .fullName.split(' ')
-                                                        .slice(0, 2)
-                                                        .join(' ')}
+                                            {formatPodiumRider(
+                                                moto3Riders,
+                                                bet.moto3.third,
+                                                '3'
+                                            )}
                                         </td>
                                         <td>
-                                            {moto2Riders.length > 0 &&
-                                                '1º ' +
-                                                    moto2Riders
-                                                        .find(
-                                                            (rider) =>
-                                                                rider.riderID ===
-                                                                bet.moto2.first
-                                                        )
-                                                        .fullName.split(' ')
-                                                        .slice(0, 2)
-                                                        .join(' ')}
+                                            {formatPodiumRider(
+                                                moto2Riders,
+                                                bet.moto2.first,
+                                                '1'
+                                            )}
                                             <br />
-                                            {moto2Riders.length > 0 &&
-                                                '2º ' +
-                                                    moto2Riders
-                                                        .find(
-                                                            (rider) =>
-                                                                rider.riderID ===
-                                                                bet.moto2.second
-                                                        )
-                                                        .fullName.split(' ')
-                                                        .slice(0, 2)
-                                                        .join(' ')}
+                                            {formatPodiumRider(
+                                                moto2Riders,
+                                                bet.moto2.second,
+                                                '2'
+                                            )}
                                             <br />
-                                            {moto2Riders.length > 0 &&
-                                                '3º ' +
-                                                    moto2Riders
-                                                        .find(
-                                                            (rider) =>
-                                                                rider.riderID ===
-                                                                bet.moto2.third
-                                                        )
-                                                        .fullName.split(' ')
-                                                        .slice(0, 2)
-                                                        .join(' ')}
+                                            {formatPodiumRider(
+                                                moto2Riders,
+                                                bet.moto2.third,
+                                                '3'
+                                            )}
                                         </td>
                                         <td>
-                                            {motoGPRiders.length > 0 &&
-                                                '1º ' +
-                                                    motoGPRiders
-                                                        .find(
-                                                            (rider) =>
-                                                                rider.riderID ===
-                                                                bet.motoGP.first
-                                                        )
-                                                        .fullName.split(' ')
-                                                        .slice(0, 2)
-                                                        .join(' ')}
+                                            {formatPodiumRider(
+                                                motoGPRiders,
+                                                bet.motoGP.first,
+                                                '1'
+                                            )}
                                             <br />
-                                            {motoGPRiders.length > 0 &&
-                                                '2º ' +
-                                                    motoGPRiders
-                                                        .find(
-                                                            (rider) =>
-                                                                rider.riderID ===
-                                                                bet.motoGP
-                                                                    .second
-                                                        )
-                                                        .fullName.split(' ')
-                                                        .slice(0, 2)
-                                                        .join(' ')}
+                                            {formatPodiumRider(
+                                                motoGPRiders,
+                                                bet.motoGP.second,
+                                                '2'
+                                            )}
                                             <br />
-                                            {motoGPRiders.length > 0 &&
-                                                '3º ' +
-                                                    motoGPRiders
-                                                        .find(
-                                                            (rider) =>
-                                                                rider.riderID ===
-                                                                bet.motoGP.third
-                                                        )
-                                                        .fullName.split(' ')
-                                                        .slice(0, 2)
-                                                        .join(' ')}
+                                            {formatPodiumRider(
+                                                motoGPRiders,
+                                                bet.motoGP.third,
+                                                '3'
+                                            )}
                                         </td>
                                     </tr>
                                 ))}
