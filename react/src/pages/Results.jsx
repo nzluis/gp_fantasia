@@ -3,6 +3,7 @@ import styles from './Results.module.css';
 import { convertPos } from '../utils/constants';
 import { calculatePoints } from '../utils/calculatePoints';
 import { toUpperise } from '../utils/toUpperise';
+import { formatName } from '../utils/formatName';
 import getHost from '../utils/getHost';
 
 export default function Results() {
@@ -96,28 +97,9 @@ export default function Results() {
                                                                 }
                                                             </td>
                                                             <td>
-                                                                {rider
-                                                                    .split(
-                                                                        '_'
-                                                                    )[0]
-                                                                    .charAt(0)
-                                                                    .toUpperCase() +
-                                                                    '.' +
+                                                                {formatName(
                                                                     rider
-                                                                        .split(
-                                                                            '_'
-                                                                        )[1]
-                                                                        .charAt(
-                                                                            0
-                                                                        )
-                                                                        .toUpperCase() +
-                                                                    rider
-                                                                        .split(
-                                                                            '_'
-                                                                        )[1]
-                                                                        .slice(
-                                                                            1
-                                                                        )}
+                                                                )}
                                                             </td>
                                                         </tr>
                                                     )
@@ -216,20 +198,9 @@ export default function Results() {
                                                                                         }
                                                                                     </td>
                                                                                     <td>
-                                                                                        {rider
-                                                                                            .split(
-                                                                                                '_'
-                                                                                            )[0]
-                                                                                            .charAt(
-                                                                                                0
-                                                                                            )
-                                                                                            .toUpperCase() +
-                                                                                            '.' +
-                                                                                            toUpperise(
-                                                                                                rider.split(
-                                                                                                    '_'
-                                                                                                )[1]
-                                                                                            )}
+                                                                                        {formatName(
+                                                                                            rider
+                                                                                        )}
                                                                                     </td>
                                                                                     <td>
                                                                                         {rider ===
