@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
-export const useMinLoadingTime = (isLoading, minTime = 3000) => {
+export const useMinLoadingTime = (isLoading, minTime = 1500) => {
     const [show, setShow] = useState(isLoading);
     const startRef = useRef(null);
 
