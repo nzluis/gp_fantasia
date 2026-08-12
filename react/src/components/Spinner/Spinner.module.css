@@ -2,20 +2,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 100%;
-    padding: 20px;
+    padding: 40px;
 }
 
 .image {
-    width: 70vw;
-    max-width: 60vh;
+    width: 100px;
+    height: 100px;
     object-fit: contain;
 }
 
 .circle {
-    width: 80px;
-    height: 80px;
-    border: 8px solid rgba(0, 0, 0, 0.15);
+    width: 64px;
+    height: 64px;
+    border: 6px solid rgba(0, 0, 0, 0.15);
     border-top-color: var(--accent-color, #d4145a);
     border-radius: 50%;
     animation: spin 1s linear infinite;
@@ -24,21 +23,5 @@
 @keyframes spin {
     to {
         transform: rotate(360deg);
-    }
-}
-
-@media (min-width: 768px) {
-    .container {
-        padding: 40px;
-    }
-
-    .image {
-        width: 300px;
-        max-width: none;
-    }
-
-    .circle {
-        width: 100px;
-        height: 100px;
     }
 }
