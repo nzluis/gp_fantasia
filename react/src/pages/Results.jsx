@@ -6,12 +6,14 @@ import { toUpperise } from '../utils/toUpperise';
 import { formatName } from '../utils/formatName';
 import getHost from '../utils/getHost';
 import Spinner from '../components/Spinner/Spinner';
+import { useMinLoadingTime } from '../hooks/useMinLoadingTime';
 
 export default function Results() {
     const [results, setResults] = useState([]);
     const [bets, setBets] = useState([]);
     const [openCircuit, setOpenCircuit] = useState(null);
     const [loading, setLoading] = useState(true);
+    const showSpinner = useMinLoadingTime(loading);
 
     useEffect(() => {
         async function fetchData() {
@@ -32,7 +34,7 @@ export default function Results() {
         fetchData();
     }, []);
 
-    if (loading) return <Spinner />;
+    if (showSpinner) return <Spinner />;
 
     const toggleCircuit = (circuit) => {
         setOpenCircuit((prev) => (prev === circuit ? null : circuit));

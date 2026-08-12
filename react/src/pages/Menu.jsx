@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar/Navbar';
 import Spinner from '../components/Spinner/Spinner';
+import { useMinLoadingTime } from '../hooks/useMinLoadingTime';
 import { GiphyFetch } from '@giphy/js-fetch-api';
 import { Gif } from '@giphy/react-components';
 
 export default function Menu() {
     const [gif, setGif] = useState(null);
     const [loading, setLoading] = useState(true);
+    const showSpinner = useMinLoadingTime(loading);
 
     const giphyFetch = new GiphyFetch('ucmBcFceCXNR9S1w724bgnDTMYepCt3j');
 
@@ -51,7 +53,7 @@ export default function Menu() {
                         mixBlendMode: 'multiply',
                     }}
                 />
-                {loading ? (
+                {showSpinner ? (
                     <Spinner />
                 ) : (
                     gif && (

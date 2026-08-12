@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import PodiumForm from '../components/PodiumForm/PodiumForm';
 import Spinner from '../components/Spinner/Spinner';
+import { useMinLoadingTime } from '../hooks/useMinLoadingTime';
 import styles from './Team.module.css';
 import { useEffect } from 'react';
 import { users } from '../utils/constants';
@@ -182,7 +183,9 @@ export default function Team() {
         fetchBets();
     }, []);
 
-    if (!(ridersReady && circuitReady && betsReady)) return <Spinner />;
+    const isLoading = !(ridersReady && circuitReady && betsReady);
+    const showSpinner = useMinLoadingTime(isLoading);
+    if (showSpinner) return <Spinner />;
 
     return (
         <div className={styles.container}>

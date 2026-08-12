@@ -3,6 +3,7 @@ import styles from './Standings.module.css';
 import { calculatePoints } from '../utils/calculatePoints';
 import getHost from '../utils/getHost';
 import Spinner from '../components/Spinner/Spinner';
+import { useMinLoadingTime } from '../hooks/useMinLoadingTime';
 
 const getProgressForCircuit = (data, result, circuitDates) => {
     const resultDate = circuitDates.get(result.circuit);
@@ -34,6 +35,7 @@ export default function Standings() {
     const [bets, setBets] = useState([]);
     const [openCircuit, setOpenCircuit] = useState(null);
     const [loading, setLoading] = useState(true);
+    const showSpinner = useMinLoadingTime(loading);
 
     useEffect(() => {
         async function fetchData() {
@@ -54,7 +56,7 @@ export default function Standings() {
         fetchData();
     }, []);
 
-    if (loading) return <Spinner />;
+    if (showSpinner) return <Spinner />;
 
     // Calculate standings
     const calculateStandings = () => {

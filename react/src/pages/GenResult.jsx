@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import PodiumForm from '../components/PodiumForm/PodiumForm';
 import Spinner from '../components/Spinner/Spinner';
+import { useMinLoadingTime } from '../hooks/useMinLoadingTime';
 import styles from './GenResult.module.css';
 import getHost from '../utils/getHost';
 
@@ -10,6 +11,7 @@ export default function GenResult() {
     const [motoGPRiders, setMotoGPRiders] = useState([]);
     const [circuits, setCircuits] = useState([]);
     const [loading, setLoading] = useState(true);
+    const showSpinner = useMinLoadingTime(loading);
     const [noPendingResult, setNoPendingResult] = useState(false);
     const [podiums, setPodiums] = useState({
         circuit: '',
@@ -126,7 +128,7 @@ export default function GenResult() {
         }
     };
 
-    if (loading) return <Spinner />;
+    if (showSpinner) return <Spinner />;
 
     if (noPendingResult) {
         return (
