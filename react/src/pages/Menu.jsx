@@ -1,22 +1,30 @@
 import { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar/Navbar';
+import Spinner from '../components/Spinner/Spinner';
 import { GiphyFetch } from '@giphy/js-fetch-api';
 import { Gif } from '@giphy/react-components';
 
 export default function Menu() {
     const [gif, setGif] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const giphyFetch = new GiphyFetch('ucmBcFceCXNR9S1w724bgnDTMYepCt3j');
 
     useEffect(() => {
         // Fetch a random GIF with the keyword "motogp"
         async function fetchRandomGif() {
-            const randomTag = `motogp-${Math.random()}`;
-            const { data } = await giphyFetch.random({
-                tag: randomTag,
-                type: 'gifs',
-            });
-            setGif(data);
+            try {
+                const randomTag = `motogp-${Math.random()}`;
+                const { data } = await giphyFetch.random({
+                    tag: randomTag,
+                    type: 'gifs',
+                });
+                setGif(data);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
         }
         fetchRandomGif();
     }, []);
@@ -38,10 +46,14 @@ export default function Menu() {
                     alt='Moto GP'
                     style={{ width: '300px', marginBottom: '20px' }}
                 />
-                {gif && (
-                    <div>
-                        <Gif gif={gif} width={300} />
-                    </div>
+                {loading ? (
+                    <Spinner />
+                ) : (
+                    gif && (
+                        <div>
+                            <Gif gif={gif} width={300} />
+                        </div>
+                    )
                 )}
             </div>
         </>
