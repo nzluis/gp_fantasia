@@ -46,8 +46,6 @@ export default function GenResult() {
             } catch (error) {
                 console.error(error);
                 alert('Error al obtener los pilotos');
-            } finally {
-                setLoading(false);
             }
         };
         if (motoGPRiders.length === 0 || !motoGPRiders) fetchRiders();
