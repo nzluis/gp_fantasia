@@ -21,7 +21,9 @@ export default function Team() {
     const [nextCircuit, setNextCircuit] = useState({});
     const [lastCircuit, setLastCircuit] = useState({});
     const [bets, setBets] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [ridersReady, setRidersReady] = useState(false);
+    const [circuitReady, setCircuitReady] = useState(false);
+    const [betsReady, setBetsReady] = useState(false);
     const [podiums, setPodiums] = useState({
         user: '',
         circuit: '',
@@ -112,10 +114,10 @@ export default function Team() {
             } catch (error) {
                 console.error(error);
             } finally {
-                setLoading(false);
+                setRidersReady(true);
             }
         };
-        if (motoGPRiders.length === 0 || !motoGPRiders) fetchRiders();
+        fetchRiders();
     }, []);
 
     useEffect(() => {
@@ -136,10 +138,10 @@ export default function Team() {
             } catch (error) {
                 console.error(error);
             } finally {
-                setLoading(false);
+                setCircuitReady(true);
             }
         };
-        if (motoGPRiders.length === 0 || !motoGPRiders) fetchNextCircuit();
+        fetchNextCircuit();
     }, []);
 
     useEffect(() => {
@@ -155,8 +157,6 @@ export default function Team() {
                 setLastCircuit(circuit);
             } catch (error) {
                 console.error(error);
-            } finally {
-                setLoading(false);
             }
         };
         fetchLastCircuit();
@@ -176,13 +176,13 @@ export default function Team() {
             } catch (error) {
                 console.error(error);
             } finally {
-                setLoading(false);
+                setBetsReady(true);
             }
         };
-        if (bets.length === 0 || !bets) fetchBets();
+        fetchBets();
     }, []);
 
-    if (loading) return <Spinner />;
+    if (!(ridersReady && circuitReady && betsReady)) return <Spinner />;
 
     return (
         <div className={styles.container}>
