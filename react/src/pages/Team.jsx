@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import PodiumForm from '../components/PodiumForm/PodiumForm';
+import Spinner from '../components/Spinner/Spinner';
 import styles from './Team.module.css';
 import { useEffect } from 'react';
 import { users } from '../utils/constants';
@@ -20,6 +21,7 @@ export default function Team() {
     const [nextCircuit, setNextCircuit] = useState({});
     const [lastCircuit, setLastCircuit] = useState({});
     const [bets, setBets] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [podiums, setPodiums] = useState({
         user: '',
         circuit: '',
@@ -109,6 +111,8 @@ export default function Team() {
                 setMotoGPRiders(motoGP);
             } catch (error) {
                 console.error(error);
+            } finally {
+                setLoading(false);
             }
         };
         if (motoGPRiders.length === 0 || !motoGPRiders) fetchRiders();
@@ -131,6 +135,8 @@ export default function Team() {
                 }));
             } catch (error) {
                 console.error(error);
+            } finally {
+                setLoading(false);
             }
         };
         if (motoGPRiders.length === 0 || !motoGPRiders) fetchNextCircuit();
@@ -149,6 +155,8 @@ export default function Team() {
                 setLastCircuit(circuit);
             } catch (error) {
                 console.error(error);
+            } finally {
+                setLoading(false);
             }
         };
         fetchLastCircuit();
@@ -167,10 +175,14 @@ export default function Team() {
                 setBets(betsData);
             } catch (error) {
                 console.error(error);
+            } finally {
+                setLoading(false);
             }
         };
         if (bets.length === 0 || !bets) fetchBets();
     }, []);
+
+    if (loading) return <Spinner />;
 
     return (
         <div className={styles.container}>
