@@ -1,40 +1,125 @@
 .container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
+    padding: 16px 12px 48px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.pageTitle {
+    margin: 0 0 16px;
 }
 
 .standingsTable {
     width: 100%;
     border-collapse: collapse;
     margin-bottom: 20px;
-    border-radius: 10px;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    font-size: 0.9rem;
 }
 
 .standingsTable th,
 .standingsTable td {
-    border: 1px solid #ddd;
-    padding: 8px;
+    border-bottom: 1px solid var(--border-color);
+    padding: 10px 12px;
     text-align: center;
 }
 
 .standingsTable th {
-    background-color: #4caf50;
-    color: white;
-    font-weight: bold;
+    background: linear-gradient(
+        135deg,
+        var(--primary-color),
+        var(--primary-dark)
+    );
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
+.standingsTable tr:last-child td {
+    border-bottom: none;
 }
 
 .circuitSection {
-    margin-bottom: 20px;
+    margin-bottom: 12px;
 }
 
 .circuitHeader {
-    background-color: #f2f2f2;
-    padding: 10px;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    padding: 12px 14px;
+    margin: 0 0 10px;
     cursor: pointer;
-    font-weight: bold;
-    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.2s ease;
 }
 
 .circuitHeader:hover {
-    background-color: #e0e0e0;
+    border-color: var(--primary-light);
+    box-shadow: var(--shadow-md);
+    color: var(--primary-darker);
+}
+
+.rank {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--surface-alt);
+    color: var(--text-muted);
+    font-weight: 700;
+    font-size: 0.8rem;
+    border: 1px solid var(--border-color);
+}
+
+.rankFirst {
+    background: linear-gradient(135deg, #ffd76e, #f5b301);
+    border-color: #e0a100;
+    color: #5a4300;
+}
+
+.rankSecond {
+    background: linear-gradient(135deg, #e8eef2, #b7c4cd);
+    border-color: #9aa8b2;
+    color: #3d4a54;
+}
+
+.rankThird {
+    background: linear-gradient(135deg, #ecc7a3, #d28b50);
+    border-color: #b06f38;
+    color: #5c3410;
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 28px 20px 60px;
+    }
+
+    .standingsTable {
+        font-size: 0.95rem;
+    }
+
+    .standingsTable th,
+    .standingsTable td {
+        padding: 12px 16px;
+    }
+
+    .circuitSection {
+        margin-bottom: 16px;
+    }
+
+    .circuitHeader {
+        padding: 14px 18px;
+        font-size: 1rem;
+    }
 }

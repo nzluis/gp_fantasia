@@ -1,63 +1,152 @@
 .container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
+    padding: 16px 12px 48px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.pageTitle {
+    margin: 0 0 16px;
 }
 
 .circuitSection {
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    margin-bottom: 16px;
+    background: var(--surface-color);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
     overflow: hidden;
+    box-shadow: var(--shadow-sm);
 }
 
 .circuitHeader {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px;
+    background: linear-gradient(
+        135deg,
+        var(--primary-color),
+        var(--primary-darker)
+    );
+    color: #fff;
+    padding: 12px 14px;
     margin: 0;
+    font-size: 0.95rem;
+    letter-spacing: 0.02em;
     cursor: pointer;
+    transition: filter 0.2s ease;
+}
+
+.circuitHeader:hover {
+    filter: brightness(1.05);
 }
 
 .circuitContent {
-    padding: 10px;
-    background-color: #f9f9f9;
+    padding: 12px;
+    overflow-x: auto;
 }
 
 .resultsTable,
 .userTable {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
 }
 
 .resultsTable th,
 .resultsTable td,
 .userTable th,
 .userTable td {
-    border: 1px solid #ddd;
-    padding: 8px;
+    border-bottom: 1px solid var(--border-color);
+    padding: 8px 10px;
     text-align: left;
+    white-space: nowrap;
 }
 
 .resultsTable th,
 .userTable th {
-    background-color: #f2f2f2;
-    font-weight: bold;
+    background: var(--surface-alt);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.resultsTable tr:last-child td,
+.userTable tr:last-child td {
+    border-bottom: none;
 }
 
 .userSection {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #eef;
-    border-radius: 5px;
+    margin-top: 16px;
+    padding: 14px;
+    background: linear-gradient(160deg, #f4faf4, #eef7ee);
+    border: 1px solid #dceadc;
+    border-radius: var(--border-radius);
+}
+
+.userSection h3 {
+    margin-top: 0;
+    text-align: left;
+    font-size: 1rem;
 }
 
 .competitionSection {
-    margin-bottom: 15px;
+    margin-bottom: 14px;
+}
+
+.competitionSection h4 {
+    color: var(--primary-dark);
+    margin: 6px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.8rem;
 }
 
 .totalPoints {
     text-align: right;
-    font-weight: bold;
+    font-weight: 700;
     margin-top: 10px;
+    color: var(--primary-darker);
+}
+
+.pointsHit {
+    color: var(--primary-darker);
+    font-weight: 700;
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 28px 20px 60px;
+    }
+
+    .pageTitle {
+        margin-bottom: 24px;
+    }
+
+    .circuitSection {
+        margin-bottom: 24px;
+        border-radius: var(--border-radius-lg);
+        box-shadow: var(--shadow-sm);
+        transition: box-shadow 0.2s ease;
+    }
+
+    .circuitSection:hover {
+        box-shadow: var(--shadow-md);
+    }
+
+    .circuitHeader {
+        padding: 14px 18px;
+        font-size: 1rem;
+    }
+
+    .circuitContent {
+        padding: 20px;
+    }
+
+    .resultsTable,
+    .userTable {
+        font-size: 0.95rem;
+    }
+
+    .userSection {
+        margin-top: 20px;
+        padding: 18px;
+    }
 }

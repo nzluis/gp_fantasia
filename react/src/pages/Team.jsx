@@ -186,6 +186,7 @@ export default function Team() {
 
     return (
         <div className={styles.container}>
+            <h1 className={styles.pageTitle}>Mi Equipo</h1>
             {/* <h1>Tu apuesta</h1> */}
             {!nextCircuit.name &&
                 lastCircuitBets.length > 0 &&

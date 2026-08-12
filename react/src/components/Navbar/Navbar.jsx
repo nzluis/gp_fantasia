@@ -8,24 +8,30 @@ import {
     faRankingStar,
 } from '@fortawesome/free-solid-svg-icons';
 
+const links = [
+    { to: '/team', icon: faMotorcycle, title: 'Mi equipo' },
+    { to: '/resultados', icon: faFlagCheckered, title: 'Resultados' },
+    { to: '/clasificacion', icon: faRankingStar, title: 'Clasificación' },
+    { to: '/genresult', icon: faCalendarPlus, title: 'Registrar resultado' },
+];
+
 export default function Navbar() {
     return (
-        <div className={styles.nav}>
-            {/* <h1>Logo</h1> */}
+        <nav className={styles.nav}>
             <div className={styles.links}>
-                <NavLink to={'/team'}>
-                    <FontAwesomeIcon icon={faMotorcycle} />
-                </NavLink>
-                <NavLink to={'/resultados'}>
-                    <FontAwesomeIcon icon={faFlagCheckered} />
-                </NavLink>
-                <NavLink to={'/clasificacion'}>
-                    <FontAwesomeIcon icon={faRankingStar} />
-                </NavLink>
-                <NavLink to={'/genresult'}>
-                    <FontAwesomeIcon icon={faCalendarPlus} />
-                </NavLink>
+                {links.map(({ to, icon, title }) => (
+                    <NavLink
+                        key={to}
+                        to={to}
+                        title={title}
+                        className={({ isActive }) =>
+                            isActive ? styles.active : styles.link
+                        }
+                    >
+                        <FontAwesomeIcon icon={icon} />
+                    </NavLink>
+                ))}
             </div>
-        </div>
+        </nav>
     );
 }

@@ -44,7 +44,12 @@ export default function Menu() {
                 <img
                     src='/motogp.svg'
                     alt='Moto GP'
-                    style={{ width: '300px', marginBottom: '20px' }}
+                    style={{
+                        width: '260px',
+                        maxWidth: '80%',
+                        marginBottom: '20px',
+                        mixBlendMode: 'multiply',
+                    }}
                 />
                 {loading ? (
                     <Spinner />

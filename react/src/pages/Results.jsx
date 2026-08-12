@@ -40,6 +40,7 @@ export default function Results() {
 
     return (
         <div className={styles.container}>
+            <h1 className={styles.pageTitle}>Resultados</h1>
             {results
                 .sort((a, b) => new Date(a.date) - new Date(b.date)) // Sort results by date
                 .map((result) => (
@@ -196,7 +197,27 @@ export default function Results() {
                                                                                     rider,
                                                                                 ],
                                                                                 index
-                                                                            ) => (
+                                                                            ) => {
+                                                                                const positionPoints =
+                                                                                    rider ===
+                                                                                    podium[
+                                                                                        position
+                                                                                    ]
+                                                                                        ? [
+                                                                                              6,
+                                                                                              5,
+                                                                                              4,
+                                                                                          ][
+                                                                                              index
+                                                                                          ]
+                                                                                        : Object.values(
+                                                                                              podium
+                                                                                          ).includes(
+                                                                                              rider
+                                                                                          )
+                                                                                        ? 2
+                                                                                        : 0;
+                                                                                return (
                                                                                 <tr
                                                                                     key={`${bet._id}-${competition}-${position}`}
                                                                                 >
@@ -212,28 +233,21 @@ export default function Results() {
                                                                                             rider
                                                                                         )}
                                                                                     </td>
-                                                                                    <td>
-                                                                                        {rider ===
-                                                                                        podium[
-                                                                                            position
-                                                                                        ]
-                                                                                            ? [
-                                                                                                  6,
-                                                                                                  5,
-                                                                                                  4,
-                                                                                              ][
-                                                                                                  index
-                                                                                              ]
-                                                                                            : Object.values(
-                                                                                                  podium
-                                                                                              ).includes(
-                                                                                                  rider
-                                                                                              )
-                                                                                            ? 2
-                                                                                            : 0}
+                                                                                    <td
+                                                                                        className={
+                                                                                            positionPoints >
+                                                                                            0
+                                                                                                ? styles.pointsHit
+                                                                                                : undefined
+                                                                                        }
+                                                                                    >
+                                                                                        {
+                                                                                            positionPoints
+                                                                                        }
                                                                                     </td>
                                                                                 </tr>
-                                                                            )
+                                                                                );
+                                                                            }
                                                                         )}
                                                                     </tbody>
                                                                     <tfoot>

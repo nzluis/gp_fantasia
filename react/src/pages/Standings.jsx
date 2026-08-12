@@ -13,6 +13,22 @@ const getProgressForCircuit = (data, result, circuitDates) => {
     }, 0);
 };
 
+const RankBadge = ({ position }) => {
+    const tone =
+        position === 1
+            ? styles.rankFirst
+            : position === 2
+            ? styles.rankSecond
+            : position === 3
+            ? styles.rankThird
+            : undefined;
+    return (
+        <span className={[styles.rank, tone].filter(Boolean).join(' ')}>
+            {position}
+        </span>
+    );
+};
+
 export default function Standings() {
     const [results, setResults] = useState([]);
     const [bets, setBets] = useState([]);
@@ -94,6 +110,7 @@ export default function Standings() {
 
     return (
         <div className={styles.container}>
+            <h1 className={styles.pageTitle}>Clasificación</h1>
             {/* General Standings Table */}
             <h3>General</h3>
             <table className={styles.standingsTable}>
@@ -107,7 +124,9 @@ export default function Standings() {
                 <tbody>
                     {sortedUsers.map(([user, data], index) => (
                         <tr key={user}>
-                            <td>{index + 1}</td>
+                            <td>
+                                <RankBadge position={index + 1} />
+                            </td>
                             <td>
                                 {user.charAt(0).toUpperCase() + user.slice(1)}
                             </td>
@@ -157,7 +176,13 @@ export default function Standings() {
                                             <tr
                                                 key={`${user}-${result.circuit}`}
                                             >
-                                                <td>{userIndex + 1}</td>
+                                                <td>
+                                                    <RankBadge
+                                                        position={
+                                                            userIndex + 1
+                                                        }
+                                                    />
+                                                </td>
                                                 <td>
                                                     {user
                                                         .charAt(0)
