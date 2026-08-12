@@ -64,6 +64,9 @@ export default function Standings() {
     const sortedUsers = Object.entries(standings).sort(
         (a, b) => b[1].total - a[1].total
     );
+    const circuitDates = new Map(
+        results.map((result) => [result.circuit, new Date(result.date).getTime()])
+    );
 
     // Toggle circuit visibility
     const toggleCircuit = (circuit) => {
@@ -121,14 +124,30 @@ export default function Standings() {
                                 <tbody>
                                     {sortedUsers.map(
                                         ([user, data], userIndex) => {
-                                            let initIndex = 0;
-                                            let progress = 0;
-                                            while (initIndex <= index) {
-                                                progress +=
-                                                    data.progress[initIndex]
-                                                        .points;
-                                                initIndex += 1;
-                                            }
+                                            const resultDate =
+                                                circuitDates.get(
+                                                    result.circuit
+                                                );
+                                            const progress =
+                                                data.progress.reduce(
+                                                    (sum, entry) => {
+                                                        const entryDate =
+                                                            circuitDates.get(
+                                                                entry.circuit
+                                                            );
+                                                        if (
+                                                            entryDate ===
+                                                            undefined
+                                                        ) {
+                                                            return sum;
+                                                        }
+                                                        return entryDate <=
+                                                            resultDate
+                                                            ? sum + entry.points
+                                                            : sum;
+                                                    },
+                                                    0
+                                                );
                                             return (
                                                 <tr
                                                     key={`${user}-${result.circuit}`}
