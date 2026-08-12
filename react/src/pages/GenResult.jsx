@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import PodiumForm from '../components/PodiumForm/PodiumForm';
+import Spinner from '../components/Spinner/Spinner';
 import styles from './GenResult.module.css';
 import getHost from '../utils/getHost';
 
@@ -8,6 +9,7 @@ export default function GenResult() {
     const [moto2Riders, setMoto2Riders] = useState([]);
     const [motoGPRiders, setMotoGPRiders] = useState([]);
     const [circuits, setCircuits] = useState([]);
+    const [loading, setLoading] = useState(true);
     const [podiums, setPodiums] = useState({
         circuit: '',
         moto3: { first: '', second: '', third: '' },
@@ -43,6 +45,8 @@ export default function GenResult() {
             } catch (error) {
                 console.error(error);
                 alert('Error al obtener los pilotos');
+            } finally {
+                setLoading(false);
             }
         };
         if (motoGPRiders.length === 0 || !motoGPRiders) fetchRiders();
@@ -84,6 +88,8 @@ export default function GenResult() {
             } catch (error) {
                 console.error(error);
                 alert('Error al obtener los circuitos');
+            } finally {
+                setLoading(false);
             }
         };
         if (motoGPRiders.length === 0 || !motoGPRiders) fetchCircuits();
@@ -120,6 +126,8 @@ export default function GenResult() {
             alert('Error guardando su resultado');
         }
     };
+
+    if (loading) return <Spinner />;
 
     return (
         <div className={styles.container}>
