@@ -4,6 +4,15 @@ import { calculatePoints } from '../utils/calculatePoints';
 import getHost from '../utils/getHost';
 import Spinner from '../components/Spinner/Spinner';
 
+const getProgressForCircuit = (data, result, circuitDates) => {
+    const resultDate = circuitDates.get(result.circuit);
+    return data.progress.reduce((sum, entry) => {
+        const entryDate = circuitDates.get(entry.circuit);
+        if (entryDate === undefined) return sum;
+        return entryDate <= resultDate ? sum + entry.points : sum;
+    }, 0);
+};
+
 export default function Standings() {
     const [results, setResults] = useState([]);
     const [bets, setBets] = useState([]);
@@ -112,7 +121,18 @@ export default function Standings() {
             <h3>By Circuit</h3>
             {results
                 .sort((a, b) => new Date(a.date) - new Date(b.date))
-                .map((result, index) => (
+                .map((result, index) => {
+                    const circuitStandings = sortedUsers
+                        .map(([user, data]) => ({
+                            user,
+                            progress: getProgressForCircuit(
+                                data,
+                                result,
+                                circuitDates
+                            ),
+                        }))
+                        .sort((a, b) => b.progress - a.progress);
+                    return (
                     <div key={result._id} className={styles.circuitSection}>
                         <h3
                             onClick={() => toggleCircuit(result.circuit)}
@@ -132,53 +152,28 @@ export default function Standings() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {sortedUsers.map(
-                                        ([user, data], userIndex) => {
-                                            const resultDate =
-                                                circuitDates.get(
-                                                    result.circuit
-                                                );
-                                            const progress =
-                                                data.progress.reduce(
-                                                    (sum, entry) => {
-                                                        const entryDate =
-                                                            circuitDates.get(
-                                                                entry.circuit
-                                                            );
-                                                        if (
-                                                            entryDate ===
-                                                            undefined
-                                                        ) {
-                                                            return sum;
-                                                        }
-                                                        return entryDate <=
-                                                            resultDate
-                                                            ? sum + entry.points
-                                                            : sum;
-                                                    },
-                                                    0
-                                                );
-                                            return (
-                                                <tr
-                                                    key={`${user}-${result.circuit}`}
-                                                >
-                                                    <td>{userIndex + 1}</td>
-                                                    <td>
-                                                        {user
-                                                            .charAt(0)
-                                                            .toUpperCase() +
-                                                            user.slice(1)}
-                                                    </td>
-                                                    <td>{progress}</td>
-                                                </tr>
-                                            );
-                                        }
+                                    {circuitStandings.map(
+                                        ({ user, progress }, userIndex) => (
+                                            <tr
+                                                key={`${user}-${result.circuit}`}
+                                            >
+                                                <td>{userIndex + 1}</td>
+                                                <td>
+                                                    {user
+                                                        .charAt(0)
+                                                        .toUpperCase() +
+                                                        user.slice(1)}
+                                                </td>
+                                                <td>{progress}</td>
+                                            </tr>
+                                        )
                                     )}
                                 </tbody>
                             </table>
                         )}
                     </div>
-                ))}
+                    );
+                })}
         </div>
     );
 }
