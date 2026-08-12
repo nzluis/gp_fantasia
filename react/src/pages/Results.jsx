@@ -5,24 +5,34 @@ import { calculatePoints } from '../utils/calculatePoints';
 import { toUpperise } from '../utils/toUpperise';
 import { formatName } from '../utils/formatName';
 import getHost from '../utils/getHost';
+import Spinner from '../components/Spinner/Spinner';
 
 export default function Results() {
     const [results, setResults] = useState([]);
     const [bets, setBets] = useState([]);
     const [openCircuit, setOpenCircuit] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         async function fetchData() {
-            const resultsResponse = await fetch(getHost() + '/results');
-            const resultsData = await resultsResponse.json();
-            const betsResponse = await fetch(getHost() + '/bets');
-            const betsData = await betsResponse.json();
+            try {
+                const resultsResponse = await fetch(getHost() + '/results');
+                const resultsData = await resultsResponse.json();
+                const betsResponse = await fetch(getHost() + '/bets');
+                const betsData = await betsResponse.json();
 
-            setResults(resultsData);
-            setBets(betsData);
+                setResults(resultsData);
+                setBets(betsData);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
         }
         fetchData();
     }, []);
+
+    if (loading) return <Spinner />;
 
     const toggleCircuit = (circuit) => {
         setOpenCircuit((prev) => (prev === circuit ? null : circuit));
