@@ -1,12 +1,31 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect, useCallback } from 'react';
 import PodiumForm from '../components/PodiumForm/PodiumForm';
 import Spinner from '../components/Spinner/Spinner';
 import { useMinLoadingTime } from '../hooks/useMinLoadingTime';
 import toast from 'react-hot-toast';
 import styles from './Team.module.css';
-import { useEffect } from 'react';
 import { users } from '../utils/constants';
 import getHost from '../utils/getHost';
+
+const STORAGE_KEYS = {
+    user: btoa('user'),
+};
+
+const getBetKey = (circuitID, user) => btoa(`bet_${circuitID}_${user}`);
+
+const getStoredUser = () => localStorage.getItem(STORAGE_KEYS.user);
+const setStoredUser = (user) => localStorage.setItem(STORAGE_KEYS.user, user);
+
+const getStoredBet = (circuitID, user) => {
+    const key = getBetKey(circuitID, user);
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored) : null;
+};
+
+const setStoredBet = (circuitID, user, bet) => {
+    const key = getBetKey(circuitID, user);
+    localStorage.setItem(key, JSON.stringify(bet));
+};
 
 const formatPodiumRider = (riders, riderID, position) => {
     if (!riders.length || !riderID) return null;
@@ -29,7 +48,6 @@ export default function Team() {
     const [podiums, setPodiums] = useState({
         user: '',
         circuit: '',
-        forceSend: false,
         moto3: { first: '', second: '', third: '' },
         moto2: { first: '', second: '', third: '' },
         motoGP: { first: '', second: '', third: '' },
@@ -43,7 +61,12 @@ export default function Team() {
         return bets.filter((bet) => bet.circuit === nextCircuit.circuitID);
     }, [bets, nextCircuit]);
 
-    // Función para manejar los cambios en los podiums
+    const userHasBetInLocalStorage = useCallback(() => {
+        if (!podiums.user || !nextCircuit.circuitID) return false;
+        const stored = getStoredBet(nextCircuit.circuitID, podiums.user);
+        return stored !== null;
+    }, [podiums.user, nextCircuit.circuitID]);
+
     const handlePodiumChange = (category, updatedPodium) => {
         setPodiums((prevPodiums) => ({
             ...prevPodiums,
@@ -51,13 +74,34 @@ export default function Team() {
         }));
     };
 
-    // const handleCheckboxChange = (e) => {
-    //     const { checked } = e.target;
-    //     setPodiums((prevPodiums) => ({
-    //         ...prevPodiums,
-    //         forceSend: checked, // Actualiza el valor de forceSend
-    //     }));
-    // };
+    const handleUserChange = (newUser) => {
+        setStoredUser(newUser);
+        setPodiums((prevPodiums) => ({
+            ...prevPodiums,
+            user: newUser,
+        }));
+
+        if (nextCircuit.circuitID) {
+            const storedBet = getStoredBet(nextCircuit.circuitID, newUser);
+            if (storedBet) {
+                setPodiums((prev) => ({
+                    ...prev,
+                    user: newUser,
+                    moto3: storedBet.moto3 || { first: '', second: '', third: '' },
+                    moto2: storedBet.moto2 || { first: '', second: '', third: '' },
+                    motoGP: storedBet.motoGP || { first: '', second: '', third: '' },
+                }));
+            } else {
+                setPodiums((prev) => ({
+                    ...prev,
+                    user: newUser,
+                    moto3: { first: '', second: '', third: '' },
+                    moto2: { first: '', second: '', third: '' },
+                    motoGP: { first: '', second: '', third: '' },
+                }));
+            }
+        }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -79,10 +123,16 @@ export default function Team() {
             }
             const saveBet = await response.json();
             console.log(saveBet);
+
+            setStoredBet(nextCircuit.circuitID, podiums.user, {
+                moto3: podiums.moto3,
+                moto2: podiums.moto2,
+                motoGP: podiums.motoGP,
+            });
+
             setPodiums({
-                user: '',
-                circuit: '',
-                forceSend: false,
+                user: podiums.user,
+                circuit: nextCircuit.circuitID,
                 moto3: { first: '', second: '', third: '' },
                 moto2: { first: '', second: '', third: '' },
                 motoGP: { first: '', second: '', third: '' },
@@ -100,7 +150,7 @@ export default function Team() {
                 const response = await fetch(getHost() + '/riders');
                 if (!response.ok)
                     console.error(
-                        'Algo fue mal consiguiendo los pilotos',
+                        'Algo fue mal conseguir los pilotos',
                         response
                     );
                 const riders = await response.json();
@@ -129,15 +179,11 @@ export default function Team() {
                 const response = await fetch(getHost() + '/nextCircuit');
                 if (!response.ok)
                     return console.error(
-                        'Algo fue mal consiguiendo los circuitos',
+                        'Algo fue mal conseguir los circuitos',
                         response
                     );
                 const circuit = await response.json();
                 setNextCircuit(circuit);
-                setPodiums((prevPodium) => ({
-                    ...prevPodium,
-                    circuit: circuit.circuitID,
-                }));
             } catch (error) {
                 console.error(error);
             } finally {
@@ -148,12 +194,26 @@ export default function Team() {
     }, []);
 
     useEffect(() => {
+        if (nextCircuit.circuitID) {
+            setPodiums((prev) => ({
+                ...prev,
+                circuit: nextCircuit.circuitID,
+            }));
+
+            const storedUser = getStoredUser();
+            if (storedUser && Object.keys(users).includes(storedUser)) {
+                handleUserChange(storedUser);
+            }
+        }
+    }, [nextCircuit.circuitID]);
+
+    useEffect(() => {
         const fetchLastCircuit = async () => {
             try {
                 const response = await fetch(getHost() + '/lastCircuit');
                 if (!response.ok)
                     return console.error(
-                        'Algo fue mal consiguiendo el último circuito',
+                        'Algo fue mal conseguir el último circuito',
                         response
                     );
                 const circuit = await response.json();
@@ -171,7 +231,7 @@ export default function Team() {
                 const betsResponse = await fetch(getHost() + '/bets');
                 if (!betsResponse.ok)
                     return console.error(
-                        'Algo fue mal consiguiendo las apuestas',
+                        'Algo fue mal conseguir las apuestas',
                         betsResponse
                     );
                 const betsData = await betsResponse.json();
@@ -189,106 +249,113 @@ export default function Team() {
     const showSpinner = useMinLoadingTime(isLoading);
     if (showSpinner) return <Spinner />;
 
+    const hasNextCircuit = !!nextCircuit.name;
+    const hasUserBet = userHasBetInLocalStorage();
+    const isPostDeadline = new Date() > new Date(lastCircuit.due_date);
+
     return (
         <div className={styles.container}>
             <h1 className={styles.pageTitle}>Mi Equipo</h1>
-            {/* <h1>Tu apuesta</h1> */}
-            {!nextCircuit.name &&
-                lastCircuitBets.length > 0 &&
-                new Date() > new Date(lastCircuit.due_date) && (
-                    <div className={styles.betsBoard}>
-                        <h3>Apuestas para</h3>
-                        <h3>{lastCircuit.name}</h3>
-                        <table className={styles.standingsTable}>
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Moto3</th>
-                                    <th>Moto2</th>
-                                    <th>MotoGP</th>
+
+            {!hasNextCircuit && !isPostDeadline && (
+                <div className={styles.betsBoard}>
+                    <p style={{ textAlign: 'center' }}>Siguiente circuito no disponible</p>
+                </div>
+            )}
+
+            {hasNextCircuit && hasUserBet && (
+                <div className={styles.betsBoard}>
+                    <h3>Tu apuesta para</h3>
+                    <h3>{nextCircuit.name}</h3>
+                    <table className={styles.standingsTable}>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Moto3</th>
+                                <th>Moto2</th>
+                                <th>MotoGP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {nextCircuitBets.map((bet) => (
+                                <tr key={bet._id}>
+                                    <td>{users[bet.user]}</td>
+                                    <td>
+                                        {formatPodiumRider(
+                                            moto3Riders,
+                                            bet.moto3.first,
+                                            '1'
+                                        )}
+                                        <br />
+                                        {formatPodiumRider(
+                                            moto3Riders,
+                                            bet.moto3.second,
+                                            '2'
+                                        )}
+                                        <br />
+                                        {formatPodiumRider(
+                                            moto3Riders,
+                                            bet.moto3.third,
+                                            '3'
+                                        )}
+                                    </td>
+                                    <td>
+                                        {formatPodiumRider(
+                                            moto2Riders,
+                                            bet.moto2.first,
+                                            '1'
+                                        )}
+                                        <br />
+                                        {formatPodiumRider(
+                                            moto2Riders,
+                                            bet.moto2.second,
+                                            '2'
+                                        )}
+                                        <br />
+                                        {formatPodiumRider(
+                                            moto2Riders,
+                                            bet.moto2.third,
+                                            '3'
+                                        )}
+                                    </td>
+                                    <td>
+                                        {formatPodiumRider(
+                                            motoGPRiders,
+                                            bet.motoGP.first,
+                                            '1'
+                                        )}
+                                        <br />
+                                        {formatPodiumRider(
+                                            motoGPRiders,
+                                            bet.motoGP.second,
+                                            '2'
+                                        )}
+                                        <br />
+                                        {formatPodiumRider(
+                                            motoGPRiders,
+                                            bet.motoGP.third,
+                                            '3'
+                                        )}
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody>
-                                {lastCircuitBets.map((bet) => (
-                                    <tr key={bet._id}>
-                                        <td>{users[bet.user]}</td>
-                                        <td>
-                                            {formatPodiumRider(
-                                                moto3Riders,
-                                                bet.moto3.first,
-                                                '1'
-                                            )}
-                                            <br />
-                                            {formatPodiumRider(
-                                                moto3Riders,
-                                                bet.moto3.second,
-                                                '2'
-                                            )}
-                                            <br />
-                                            {formatPodiumRider(
-                                                moto3Riders,
-                                                bet.moto3.third,
-                                                '3'
-                                            )}
-                                        </td>
-                                        <td>
-                                            {formatPodiumRider(
-                                                moto2Riders,
-                                                bet.moto2.first,
-                                                '1'
-                                            )}
-                                            <br />
-                                            {formatPodiumRider(
-                                                moto2Riders,
-                                                bet.moto2.second,
-                                                '2'
-                                            )}
-                                            <br />
-                                            {formatPodiumRider(
-                                                moto2Riders,
-                                                bet.moto2.third,
-                                                '3'
-                                            )}
-                                        </td>
-                                        <td>
-                                            {formatPodiumRider(
-                                                motoGPRiders,
-                                                bet.motoGP.first,
-                                                '1'
-                                            )}
-                                            <br />
-                                            {formatPodiumRider(
-                                                motoGPRiders,
-                                                bet.motoGP.second,
-                                                '2'
-                                            )}
-                                            <br />
-                                            {formatPodiumRider(
-                                                motoGPRiders,
-                                                bet.motoGP.third,
-                                                '3'
-                                            )}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                )}
-            <form onSubmit={handleSubmit}>
-                <h3>{nextCircuit.name ?? nextCircuit.message}</h3>
-                <div>
-                    <label>User: </label>
-                    <select
-                        value={podiums.user}
-                        onChange={(e) =>
-                            handlePodiumChange('user', e.target.value)
-                        }
-                        required
-                    >
-                        <option value=''>Seleccionar</option>
-                        {nextCircuit.name &&
-                            Object.keys(users).map((userKey) => {
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            )}
+
+            {hasNextCircuit && !hasUserBet && (
+                <form onSubmit={handleSubmit}>
+                    <h3>{nextCircuit.name}</h3>
+                    <div>
+                        <label>User: </label>
+                        <select
+                            value={podiums.user}
+                            onChange={(e) => handleUserChange(e.target.value)}
+                            required
+                        >
+                            <option value=''>Seleccionar</option>
+                            {Object.keys(users).map((userKey) => {
                                 const userBet =
                                     nextCircuitBets?.find(
                                         (bet) => bet.user === userKey
@@ -302,41 +369,112 @@ export default function Team() {
                                 }
                                 return null;
                             })}
-                    </select>
+                        </select>
+                    </div>
+                    <PodiumForm
+                        riders={moto3Riders}
+                        category='moto3'
+                        onPodiumChange={handlePodiumChange}
+                        initialPodium={podiums.moto3}
+                    />
+                    <PodiumForm
+                        riders={moto2Riders}
+                        category='moto2'
+                        onPodiumChange={handlePodiumChange}
+                        initialPodium={podiums.moto2}
+                    />
+                    <PodiumForm
+                        riders={motoGPRiders}
+                        category='motoGP'
+                        onPodiumChange={handlePodiumChange}
+                        initialPodium={podiums.motoGP}
+                    />
+                    <div className={styles.submitArea}>
+                        <button type='submit'>Enviar Resultados</button>
+                    </div>
+                </form>
+            )}
+
+            {!hasNextCircuit && lastCircuitBets.length > 0 && isPostDeadline && (
+                <div className={styles.betsBoard}>
+                    <h3>Apuestas para</h3>
+                    <h3>{lastCircuit.name}</h3>
+                    <table className={styles.standingsTable}>
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Moto3</th>
+                                <th>Moto2</th>
+                                <th>MotoGP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {lastCircuitBets.map((bet) => (
+                                <tr key={bet._id}>
+                                    <td>{users[bet.user]}</td>
+                                    <td>
+                                        {formatPodiumRider(
+                                            moto3Riders,
+                                            bet.moto3.first,
+                                            '1'
+                                        )}
+                                        <br />
+                                        {formatPodiumRider(
+                                            moto3Riders,
+                                            bet.moto3.second,
+                                            '2'
+                                        )}
+                                        <br />
+                                        {formatPodiumRider(
+                                            moto3Riders,
+                                            bet.moto3.third,
+                                            '3'
+                                        )}
+                                    </td>
+                                    <td>
+                                        {formatPodiumRider(
+                                            moto2Riders,
+                                            bet.moto2.first,
+                                            '1'
+                                        )}
+                                        <br />
+                                        {formatPodiumRider(
+                                            moto2Riders,
+                                            bet.moto2.second,
+                                            '2'
+                                        )}
+                                        <br />
+                                        {formatPodiumRider(
+                                            moto2Riders,
+                                            bet.moto2.third,
+                                            '3'
+                                        )}
+                                    </td>
+                                    <td>
+                                        {formatPodiumRider(
+                                            motoGPRiders,
+                                            bet.motoGP.first,
+                                            '1'
+                                        )}
+                                        <br />
+                                        {formatPodiumRider(
+                                            motoGPRiders,
+                                            bet.motoGP.second,
+                                            '2'
+                                        )}
+                                        <br />
+                                        {formatPodiumRider(
+                                            motoGPRiders,
+                                            bet.motoGP.third,
+                                            '3'
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
-                <PodiumForm
-                    riders={moto3Riders}
-                    category='moto3'
-                    onPodiumChange={handlePodiumChange}
-                />
-                <PodiumForm
-                    riders={moto2Riders}
-                    category='moto2'
-                    onPodiumChange={handlePodiumChange}
-                />
-                <PodiumForm
-                    riders={motoGPRiders}
-                    category='motoGP'
-                    onPodiumChange={handlePodiumChange}
-                />
-                <div className={styles.submitArea}>
-                    <button type='submit'>Enviar Resultados</button>
-                    {/* <div className={styles.checkbox}>
-                        <label
-                            className={styles.checkboxLabel}
-                            htmlFor='forceSend'
-                        >
-                            Force
-                        </label>
-                        <input
-                            type='checkbox'
-                            id='forceSend'
-                            checked={podiums.forceSend}
-                            onChange={handleCheckboxChange}
-                        />
-                    </div> */}
-                </div>
-            </form>
+            )}
         </div>
     );
 }
