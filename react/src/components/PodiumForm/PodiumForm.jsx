@@ -1,11 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-export default function PodiumForm({ riders, category, onPodiumChange }) {
-    const [podium, setPodium] = useState({
+export default function PodiumForm({ riders, category, onPodiumChange, initialPodium = null }) {
+    const [podium, setPodium] = useState(initialPodium || {
         first: '',
         second: '',
         third: '',
     });
+
+    useEffect(() => {
+        if (initialPodium) {
+            setPodium(initialPodium);
+            onPodiumChange(category, initialPodium);
+        }
+    }, [initialPodium, category, onPodiumChange]);
 
     // Función para actualizar la posición seleccionada
     const handleSelection = (position, value) => {
